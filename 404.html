@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Valorwide">
+        <meta name="description" content="Stackly Business & corporate agency HTML template">
+        <title>404 Not Found - Stackly</title>
+        <!--<< Favcion >>-->
+        <link rel="shortcut icon" href="images/favicon.svg">
+        <!--<< Bootstrap min.css >>-->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!--<< All Min Css >>-->
+        <link rel="stylesheet" href="css/all.min.css">
+        <!--<< Animate.css >>-->
+        <link rel="stylesheet" href="css/animate.css">
+        <!--<< Main.css >>-->
+        <link rel="stylesheet" href="css/main.css">
+        <style>
+            body.error-page-body {
+                min-height: 100vh;
+                background-color: #f7f9fb;
+                background-image: radial-gradient(circle at 50% 30%, rgba(197, 168, 128, 0.12) 0%, transparent 65%);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 40px 20px;
+                margin: 0;
+                font-family: "Cormorant", "Plus Jakarta Sans", sans-serif;
+                overflow-x: hidden;
+            }
+
+            .error-page-card {
+                background: #ffffff;
+                border: 1px solid #eef1f5;
+                border-radius: 20px;
+                box-shadow: 0 25px 60px rgba(28, 26, 29, 0.08);
+                max-width: 680px;
+                width: 100%;
+                padding: 60px 40px;
+                text-align: center;
+                position: relative;
+                overflow: hidden;
+            }
+
+            .error-page-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 5px;
+                background: linear-gradient(90deg, #C5A880, #1C1A1D, #C5A880);
+            }
+
+            .error-code {
+                font-size: clamp(90px, 18vw, 170px);
+                font-weight: 800;
+                line-height: 1;
+                letter-spacing: 8px;
+                color: #1C1A1D;
+                margin-bottom: 12px;
+                text-shadow: 2px 4px 12px rgba(0,0,0,0.06);
+            }
+
+            .error-code span {
+                color: #C5A880;
+            }
+
+            .error-title {
+                font-size: clamp(24px, 4vw, 34px);
+                font-weight: 700;
+                color: #1C1A1D;
+                margin-bottom: 16px;
+            }
+
+            .error-desc {
+                font-size: 16px;
+                color: #6c757d;
+                line-height: 1.6;
+                max-width: 480px;
+                margin: 0 auto 36px;
+            }
+
+            .error-actions {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 16px;
+            }
+
+            .btn-action-primary {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 14px 28px;
+                border-radius: 10px;
+                font-size: 15px;
+                font-weight: 600;
+                background: #1C1A1D;
+                color: #ffffff;
+                text-decoration: none;
+                transition: all 0.3s;
+                border: 1px solid #1C1A1D;
+            }
+
+            .btn-action-primary:hover {
+                background: #C5A880;
+                border-color: #C5A880;
+                color: #1C1A1D;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(197, 168, 128, 0.3);
+            }
+
+            .btn-action-secondary {
+                display: inline-flex;
+                align-items: center;
+                gap: 10px;
+                padding: 14px 28px;
+                border-radius: 10px;
+                font-size: 15px;
+                font-weight: 600;
+                background: #ffffff;
+                color: #1C1A1D;
+                text-decoration: none;
+                transition: all 0.3s;
+                border: 2px solid #C5A880;
+            }
+
+            .btn-action-secondary:hover {
+                background: #C5A880;
+                color: #1C1A1D;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 20px rgba(197, 168, 128, 0.25);
+            }
+
+            .error-page-footer {
+                margin-top: 24px;
+                color: #9aa1a9;
+                font-size: 13px;
+            }
+        </style>
+    </head>
+    <body class="error-page-body">
+
+        <!-- Preloader Start -->
+        <div id="preloader" class="preloader">
+            <div class="animation-preloader">
+                <div class="spinner"></div>
+                <div class="txt-loading">
+                <span data-text-preloader="S" class="letters-loading">
+                    S
+                </span>
+                <span data-text-preloader="T" class="letters-loading">
+                    T
+                </span>
+                <span data-text-preloader="A" class="letters-loading">
+                    A
+                </span>
+                <span data-text-preloader="C" class="letters-loading">
+                    C
+                </span>
+                <span data-text-preloader="K" class="letters-loading">
+                    K
+                </span>
+                <span data-text-preloader="L" class="letters-loading">
+                    L
+                </span>
+                <span data-text-preloader="Y" class="letters-loading">
+                    Y
+                </span>
+            </div>
+                <p class="text-center">Loading</p>
+            </div>
+            <div class="loader">
+                <div class="row">
+                    <div class="col-3 loader-section section-left"><div class="bg"></div></div>
+                    <div class="col-3 loader-section section-left"><div class="bg"></div></div>
+                    <div class="col-3 loader-section section-right"><div class="bg"></div></div>
+                    <div class="col-3 loader-section section-right"><div class="bg"></div></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mouse Cursor Start -->
+        
+        <!-- 404 Standalone Content Card -->
+        <div class="error-page-card wow fadeInUp" data-wow-delay=".2s">
+            <!-- Brand Logo -->
+            <div class="mb-3">
+                <a href="index.html">
+                    <img src="images/stackly-logo.webp" alt="Stackly Logo" style="height: 38px;">
+                </a>
+            </div>
+
+            <!-- Big 404 -->
+            <div class="error-code">4<span>0</span>4</div>
+
+            <!-- Title & Description -->
+            <h2 class="error-title">Oops! Page Not Found</h2>
+            <p class="error-desc">
+                The requested resource does not exist or may have been moved. Choose one of the options below to continue.
+            </p>
+
+            <!-- Both Action Buttons (Return to Home & Return to Dashboard) -->
+            <div class="error-actions">
+                <a href="index.html" class="btn-action-primary back-home-btn">
+                    <i class="fa-solid fa-house"></i>
+                    <span>Return to Home</span>
+                </a>
+                <a href="#" class="btn-action-secondary return-dashboard-btn" style="display: none;">
+                    <i class="fa-solid fa-gauge"></i>
+                    <span>Return to Dashboard</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="error-page-footer">
+            <span>&copy; 2026 Stackly. All Rights Reserved.</span>
+        </div>
+
+        <!-- Scripts -->
+        <script src="js/jquery-3.7.1.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/wow.min.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/main.js"></script>
+        <script>
+            // Safety fallback: reveal WOW elements immediately
+            window.addEventListener('load', function() {
+                setTimeout(function() {
+                    document.querySelectorAll('.wow').forEach(function(el) {
+                        el.style.visibility = 'visible';
+                    });
+                }, 400);
+            });
+        </script>
+    </body>
+</html>

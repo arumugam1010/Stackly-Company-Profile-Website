@@ -1,0 +1,1338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Admin Dashboard - Stackly Console</title>
+    <link rel="shortcut icon" href="images/favicon.svg">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="dash-sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-layout">
+        <!-- 10-Item Sidebar -->
+        <aside class="dash-sidebar" id="dashSidebar">
+            <div class="dash-sidebar-header">
+                <a href="#tab-overview" class="dash-sidebar-brand" id="brandLogoLink" title="Go to Overview">
+                    <img src="images/stackly-logo.webp" alt="Stackly Logo">
+                </a>
+                <button class="btn btn-sm text-white d-lg-none" id="closeSidebarBtn">
+                    <i class="fa-solid fa-xmark fa-lg"></i>
+                </button>
+            </div>
+
+            <!-- User Profile Card Inside Sidebar -->
+            <div class="px-3 pt-3 pb-2">
+                <div class="d-flex align-items-center gap-2 p-2 rounded" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);">
+                    <div class="dash-user-avatar" style="width: 34px; height: 34px; font-size: 14px;">A</div>
+                    <div class="overflow-hidden flex-grow-1">
+                        <div class="dash-user-name auth-user-name fw-bold text-white small" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">saravanan</div>
+                        <span class="dash-user-role-badge role-admin auth-user-role" style="font-size: 10px; padding: 1px 6px;">ADMIN</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-sidebar-menu">
+                <div class="px-3 mb-2 small text-uppercase text-muted fw-bold" style="font-size: 11px; letter-spacing: 1px;">Admin Navigation </div>
+                <ul class="dash-nav-list">
+                    <!-- 1. Overview -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-overview" class="dash-nav-link active" data-tab="tab-overview">
+                            <i class="fa-solid fa-chart-pie"></i>
+                            <span>System Overview</span>
+                        </a>
+                    </li>
+                    <!-- 2. Analytics -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-analytics" class="dash-nav-link" data-tab="tab-analytics">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>Analytics &amp; KPI</span>
+                        </a>
+                    </li>
+                    <!-- 3. User Management -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-users" class="dash-nav-link" data-tab="tab-users">
+                            <i class="fa-solid fa-users"></i>
+                            <span>User Management</span>
+                        </a>
+                    </li>
+                    <!-- 4. Projects -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-projects" class="dash-nav-link" data-tab="tab-projects">
+                            <i class="fa-solid fa-briefcase"></i>
+                            <span>Projects &amp; Portfolio</span>
+                        </a>
+                    </li>
+                    <!-- 5. Services -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-services" class="dash-nav-link" data-tab="tab-services">
+                            <i class="fa-solid fa-layer-group"></i>
+                            <span>Services &amp; Operations</span>
+                        </a>
+                    </li>
+                    <!-- 6. Financials -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-billing" class="dash-nav-link" data-tab="tab-billing">
+                            <i class="fa-solid fa-wallet"></i>
+                            <span>Financials &amp; Billing</span>
+                        </a>
+                    </li>
+                    <!-- 7. Support & Messages -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-support" class="dash-nav-link" data-tab="tab-support">
+                            <i class="fa-solid fa-comments"></i>
+                            <span>Messages &amp; Support</span>
+                        </a>
+                    </li>
+                    <!-- 8. Document Vault -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-vault" class="dash-nav-link" data-tab="tab-vault">
+                            <i class="fa-solid fa-folder-open"></i>
+                            <span>Document Vault</span>
+                        </a>
+                    </li>
+                    <!-- 9. System Settings -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-settings" class="dash-nav-link" data-tab="tab-settings">
+                            <i class="fa-solid fa-gear"></i>
+                            <span>System Settings</span>
+                        </a>
+                    </li>
+                    <!-- 10. Audit Logs -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-logs" class="dash-nav-link" data-tab="tab-logs">
+                            <i class="fa-solid fa-clock-rotate-left"></i>
+                            <span>Activity &amp; Audit Logs</span>
+                        </a>
+                    </li>
+
+                    <!-- Inside Actions (Logout inside Sidebar) -->
+                    <li class="my-2 border-top border-secondary border-opacity-25"></li>
+                    <li class="dash-nav-item">
+                        <a href="#" class="dash-nav-link text-danger btn-dash-logout" onclick="BizlyAuth.logout('index.html'); return false;">
+                            <i class="fa-solid fa-right-from-bracket text-danger"></i>
+                            <span class="text-danger fw-bold">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard View Area -->
+        <main class="dash-main">
+            <!-- Topbar (Clean Header without redundant right action column) -->
+            <header class="dash-topbar">
+                <div class="dash-topbar-left">
+                    <button class="dash-sidebar-toggle" id="openSidebarBtn" aria-label="Toggle Navigation">
+                        <i class="fa-regular fa-bars-staggered"></i>
+                    </button>
+                    <div>
+                        <h5 class="mb-0 fw-bold" id="dashCurrentTabTitle">System Overview</h5>
+                        <small class="text-muted d-none d-md-block">Admin Console &bull; <span class="auth-user-name">admin@stackly.com</span></small>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Tab Content Panes -->
+            <div class="dash-content">
+
+                <!-- TAB 1: SYSTEM OVERVIEW -->
+                <div class="dash-tab-pane" id="tab-overview">
+                    <div class="alert alert-light border rounded-3 p-3 mb-4 d-flex flex-wrap justify-content-between align-items-center">
+                        <div>
+                            <h6 class="fw-bold mb-1"><i class="fa-solid fa-shield-check text-warning me-2"></i> System Status: Operational</h6>
+                            <small class="text-muted">Administrator account with full multi-tenant root privileges.</small>
+                        </div>
+                        <div class="mt-2 mt-sm-0">
+                            <button class="btn btn-sm btn-outline-dark me-2" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-download me-1"></i> Export Data
+                            </button>
+                            <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-gear me-1"></i> Configuration
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4 Stat Cards -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Total Revenue</div>
+                                    <div class="dash-stat-value">$1,248,500</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-up"></i> +14.8% this month</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-dollar-sign"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Active Users</div>
+                                    <div class="dash-stat-value">3,842</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-up"></i> +8.2% new users</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-users"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">System Load</div>
+                                    <div class="dash-stat-value">28.4%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-check"></i> Optimal health</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-server"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Pending Reviews</div>
+                                    <div class="dash-stat-value">19</div>
+                                    <div class="dash-stat-change down"><i class="fa-solid fa-clock"></i> 5 urgent</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-bell"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Table & Quick Actions -->
+                    <div class="row g-4">
+                        <div class="col-xl-8">
+                            <div class="dash-card">
+                                <div class="dash-card-header">
+                                    <h6 class="dash-card-title"><i class="fa-solid fa-users-gear me-2"></i> Recent System Accounts &amp; Activity</h6>
+                                    <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">View All (404)</button>
+                                </div>
+                                <div class="dash-card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="dash-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>User</th>
+                                                    <th>Role</th>
+                                                    <th>Status</th>
+                                                    <th>Last Active</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                        <div class="fw-bold">Sarah Connor</div>
+                                                        <small class="text-muted">sarah@cyber.org</small>
+                                                    </td>
+                                                    <td><span class="badge bg-warning text-dark">Admin</span></td>
+                                                    <td><span class="badge bg-success">Active</span></td>
+                                                    <td>2 mins ago</td>
+                                                    <td><button class="btn btn-sm btn-outline-primary" onclick="window.location.href='404.html'">Manage</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="fw-bold">Marcus Vance</div>
+                                                        <small class="text-muted">marcus@stackly.com</small>
+                                                    </td>
+                                                    <td><span class="badge bg-primary">Manager</span></td>
+                                                    <td><span class="badge bg-success">Active</span></td>
+                                                    <td>45 mins ago</td>
+                                                    <td><button class="btn btn-sm btn-outline-primary" onclick="window.location.href='404.html'">Manage</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        <div class="fw-bold">Elena Rostova</div>
+                                                        <small class="text-muted">elena@client.io</small>
+                                                    </td>
+                                                    <td><span class="badge bg-success">Client</span></td>
+                                                    <td><span class="badge bg-success">Active</span></td>
+                                                    <td>2 hours ago</td>
+                                                    <td><button class="btn btn-sm btn-outline-primary" onclick="window.location.href='404.html'">Manage</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="dash-card">
+                                <div class="dash-card-header">
+                                    <h6 class="dash-card-title"><i class="fa-solid fa-list-check me-2"></i> Quick Admin Actions</h6>
+                                </div>
+                                <div class="dash-card-body">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-dark text-start py-2" onclick="window.location.href='404.html'">
+                                            <i class="fa-solid fa-user-plus me-2 text-warning"></i> Provision New Role
+                                        </button>
+                                        <button class="btn btn-outline-dark text-start py-2" onclick="window.location.href='404.html'">
+                                            <i class="fa-solid fa-database me-2 text-primary"></i> Backup System Database
+                                        </button>
+                                        <button class="btn btn-outline-dark text-start py-2" onclick="window.location.href='404.html'">
+                                            <i class="fa-solid fa-key me-2 text-danger"></i> Reset Security Credentials
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: ANALYTICS & KPI -->
+                <div class="dash-tab-pane d-none" id="tab-analytics">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                        <div>
+                            <h5 class="fw-bold mb-1">Performance Analytics &amp; KPI Metrics</h5>
+                            <p class="text-muted small mb-0">Live aggregated metrics across marketing and enterprise clients</p>
+                        </div>
+                        <button class="btn btn-sm btn-dark mt-2 mt-sm-0" onclick="window.location.href='404.html'">
+                            <i class="fa-solid fa-file-export me-1"></i> Export KPI Report (404)
+                        </button>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Monthly Impressions</div>
+                                    <div class="dash-stat-value">842.5K</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-up"></i> +21.4% MoM</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-eye"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Conversion Rate</div>
+                                    <div class="dash-stat-value">5.82%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-up"></i> +0.6% vs benchmark</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-bullseye"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Avg Consulting Value</div>
+                                    <div class="dash-stat-value">$42,300</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-up"></i> +11.2%</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Churn Rate</div>
+                                    <div class="dash-stat-value">0.84%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-down text-success"></i> -0.2% lowest</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-arrow-trend-down"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-chart-column me-2"></i> Client Acquisition Channels</h6>
+                            <button class="btn btn-sm btn-outline-secondary" onclick="window.location.href='404.html'">Inspect Data</button>
+                        </div>
+                        <div class="dash-card-body">
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1"><span>Direct Enterprise Referral</span><span class="fw-bold">48%</span></div>
+                                <div class="progress" style="height: 8px;"><div class="progress-bar bg-warning" style="width: 48%;"></div></div>
+                            </div>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1"><span>Strategic Industry Partnerships</span><span class="fw-bold">29%</span></div>
+                                <div class="progress" style="height: 8px;"><div class="progress-bar bg-primary" style="width: 29%;"></div></div>
+                            </div>
+                            <div>
+                                <div class="d-flex justify-content-between mb-1"><span>Organic Consulting Inquiries</span><span class="fw-bold">23%</span></div>
+                                <div class="progress" style="height: 8px;"><div class="progress-bar bg-success" style="width: 23%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: USER MANAGEMENT -->
+                <div class="dash-tab-pane d-none" id="tab-users">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+                        <div>
+                            <h5 class="fw-bold mb-1">User Directory &amp; Role Access Control</h5>
+                            <p class="text-muted small mb-0">Total Accounts: 3,842 Registered Profiles</p>
+                        </div>
+                        <div class="d-flex gap-2 mt-2 mt-sm-0">
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'"><i class="fa-solid fa-filter me-1"></i> Filter</button>
+                            <button class="btn btn-sm btn-warning text-dark fw-bold" onclick="window.location.href='404.html'"><i class="fa-solid fa-user-plus me-1"></i> Add User</button>
+                        </div>
+                    </div>
+
+                    <div class="dash-card">
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Email</th>
+                                            <th>Role</th>
+                                            <th>Status</th>
+                                            <th>Created Date</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Sarah Connor</strong></td>
+                                            <td>sarah@cyber.org</td>
+                                            <td><span class="badge bg-warning text-dark">Admin</span></td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td>Jan 12, 2026</td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Edit</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Marcus Vance</strong></td>
+                                            <td>marcus@stackly.com</td>
+                                            <td><span class="badge bg-primary">Manager</span></td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td>Feb 04, 2026</td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Edit</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Elena Rostova</strong></td>
+                                            <td>elena@client.io</td>
+                                            <td><span class="badge bg-success">Client</span></td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td>Mar 19, 2026</td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Edit</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>David Miller</strong></td>
+                                            <td>david@acme.com</td>
+                                            <td><span class="badge bg-success">Client</span></td>
+                                            <td><span class="badge bg-secondary">Offline</span></td>
+                                            <td>Apr 01, 2026</td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Edit</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: PROJECTS & PORTFOLIO -->
+                <div class="dash-tab-pane d-none" id="tab-projects">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Enterprise Projects &amp; Global Client Portfolio (24 Active)</h5>
+                            <small class="text-muted">Master portfolio governance across all active Fortune 500 consulting workstreams.</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-file-export me-1"></i> Export Master Portfolio (404)
+                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-plus me-1"></i> New Enterprise Project (404)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Project KPI Stats Row -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Active Engagements</div>
+                                    <div class="dash-stat-value">24</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-circle-check"></i> 100% In Good Standing</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-diagram-project"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Enterprise Accounts</div>
+                                    <div class="dash-stat-value">18</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-building"></i> Multi-National</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-globe"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Portfolio Value</div>
+                                    <div class="dash-stat-value">$3.85M</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-trend-up"></i> +18.4% YoY</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-sack-dollar"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Average Margin</div>
+                                    <div class="dash-stat-value">56.2%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-chart-line"></i> Exceeds 50% target</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-scale-balanced"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comprehensive Master Projects Table -->
+                    <div class="dash-card mb-4">
+                        <div class="dash-card-header d-flex justify-content-between align-items-center">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-list-check me-2"></i> Master Enterprise Engagements Ledger</h6>
+                            <span class="badge bg-light text-dark border">Showing Top 6 Engagements</span>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Client Organization</th>
+                                            <th>Engagement Title</th>
+                                            <th>Lead Advisory Partner</th>
+                                            <th>Contract Value</th>
+                                            <th>Phase Progress</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Horizon Global Ventures Inc.</strong></td>
+                                            <td>Enterprise Cloud Architecture Modernization</td>
+                                            <td>Brooklyn Simmons</td>
+                                            <td>$120,000</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-success" style="width: 85%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">85%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">On Schedule</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Govern (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Global Logistics Ltd</strong></td>
+                                            <td>Multi-Region Hybrid Cloud Migration</td>
+                                            <td>Martina Welliam</td>
+                                            <td>$145,000</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-primary" style="width: 70%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">70%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">On Schedule</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Govern (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>FinVanguard Group</strong></td>
+                                            <td>Corporate AI Risk Scoring &amp; Telemetry</td>
+                                            <td>Leslie Alexander</td>
+                                            <td>$95,000</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-warning" style="width: 92%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">92%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-warning text-dark">Under Review</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Govern (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Nexus Manufacturing</strong></td>
+                                            <td>Global ERP SAP to Snowflake Data Staging</td>
+                                            <td>Brooklyn Simmons</td>
+                                            <td>$110,000</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-info" style="width: 68%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">68%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">On Schedule</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Govern (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Aegis Biopharma Corp</strong></td>
+                                            <td>SOC2 Type II &amp; HIPAA Regulatory Compliance</td>
+                                            <td>Cody Fisher</td>
+                                            <td>$85,000</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-success" style="width: 100%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">100%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-primary">Completed</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Govern (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Apex Retail Ventures</strong></td>
+                                            <td>Omnichannel Supply Chain Automation</td>
+                                            <td>Martina Welliam</td>
+                                            <td>$90,000</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-primary" style="width: 50%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">50%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">On Schedule</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Govern (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: SERVICES & OPERATIONS -->
+                <div class="dash-tab-pane d-none" id="tab-services">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Enterprise Consulting Services Catalog &amp; SLAs</h5>
+                            <small class="text-muted">Manage billable service modules, recurring retainers, and SLA response guarantees.</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-file-pdf me-1"></i> Catalog PDF (404)
+                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-plus me-1"></i> Add Service (404)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Service Health Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Active Services</div>
+                                    <div class="dash-stat-value">6</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-check"></i> All Operating</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-boxes-stacked"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Platform Uptime</div>
+                                    <div class="dash-stat-value">99.98%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-bolt"></i> SLA Guarantee</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-server"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Client Retainers</div>
+                                    <div class="dash-stat-value">42</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-users"></i> Active Accounts</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-repeat"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Avg Turnaround</div>
+                                    <div class="dash-stat-value">48 hrs</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-stopwatch"></i> Rapid Delivery</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-clock"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 6 Service Cards in Responsive Grid -->
+                    <div class="row g-4">
+                        <!-- Service 1 -->
+                        <div class="col-xl-4 col-md-6">
+                            <div class="dash-card h-100 p-4 d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-compass"></i></div>
+                                    <span class="badge bg-success">Active Service</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">Strategic Business Planning</h6>
+                                <p class="small text-muted mb-3">Enterprise organizational roadmapping, M&amp;A advisory, and shareholder market alignment.</p>
+                                <div class="small text-muted mb-4 border-top pt-2 flex-grow-1">
+                                    <div><strong>Retainer:</strong> $15,000 / month</div>
+                                    <div><strong>Lead:</strong> Martina Welliam</div>
+                                    <div><strong>Active Clients:</strong> 8 Corporate Accounts</div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Configure SLA (404)</button>
+                            </div>
+                        </div>
+
+                        <!-- Service 2 -->
+                        <div class="col-xl-4 col-md-6">
+                            <div class="dash-card h-100 p-4 d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-coins"></i></div>
+                                    <span class="badge bg-success">Active Service</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">Corporate Financial Advisory</h6>
+                                <p class="small text-muted mb-3">Capital budgeting, multi-scenario DCF valuation modeling, and tax structure optimization.</p>
+                                <div class="small text-muted mb-4 border-top pt-2 flex-grow-1">
+                                    <div><strong>Retainer:</strong> $18,500 / month</div>
+                                    <div><strong>Lead:</strong> Martina Welliam</div>
+                                    <div><strong>Active Clients:</strong> 12 Corporate Accounts</div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Configure SLA (404)</button>
+                            </div>
+                        </div>
+
+                        <!-- Service 3 -->
+                        <div class="col-xl-4 col-md-6">
+                            <div class="dash-card h-100 p-4 d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-cloud"></i></div>
+                                    <span class="badge bg-success">Active Service</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">Cloud Architecture &amp; DevSecOps</h6>
+                                <p class="small text-muted mb-3">AWS &amp; Azure hybrid cloud migration, Kubernetes container orchestration, and zero-trust.</p>
+                                <div class="small text-muted mb-4 border-top pt-2 flex-grow-1">
+                                    <div><strong>Retainer:</strong> $22,000 / month</div>
+                                    <div><strong>Lead:</strong> Brooklyn Simmons</div>
+                                    <div><strong>Active Clients:</strong> 10 Corporate Accounts</div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Configure SLA (404)</button>
+                            </div>
+                        </div>
+
+                        <!-- Service 4 -->
+                        <div class="col-xl-4 col-md-6">
+                            <div class="dash-card h-100 p-4 d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-robot"></i></div>
+                                    <span class="badge bg-success">Active Service</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">Enterprise AI &amp; Predictive Analytics</h6>
+                                <p class="small text-muted mb-3">Private fine-tuned LLM deployment, customer churn prediction, and real-time BI telemetry.</p>
+                                <div class="small text-muted mb-4 border-top pt-2 flex-grow-1">
+                                    <div><strong>Retainer:</strong> $25,000 / month</div>
+                                    <div><strong>Lead:</strong> Leslie Alexander</div>
+                                    <div><strong>Active Clients:</strong> 6 Corporate Accounts</div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Configure SLA (404)</button>
+                            </div>
+                        </div>
+
+                        <!-- Service 5 -->
+                        <div class="col-xl-4 col-md-6">
+                            <div class="dash-card h-100 p-4 d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-file-shield"></i></div>
+                                    <span class="badge bg-success">Active Service</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">SOC2 Type II &amp; Risk Governance</h6>
+                                <p class="small text-muted mb-3">Audit readiness attestation, ISO 27001 compliance roadmap, and HIPAA risk posture.</p>
+                                <div class="small text-muted mb-4 border-top pt-2 flex-grow-1">
+                                    <div><strong>Retainer:</strong> $16,000 / month</div>
+                                    <div><strong>Lead:</strong> Cody Fisher</div>
+                                    <div><strong>Active Clients:</strong> 9 Corporate Accounts</div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Configure SLA (404)</button>
+                            </div>
+                        </div>
+
+                        <!-- Service 6 -->
+                        <div class="col-xl-4 col-md-6">
+                            <div class="dash-card h-100 p-4 d-flex flex-column">
+                                <div class="d-flex justify-content-between align-items-center mb-3">
+                                    <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-network-wired"></i></div>
+                                    <span class="badge bg-success">Active Service</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">ERP &amp; Supply Chain Modernization</h6>
+                                <p class="small text-muted mb-3">SAP staging pipeline, Snowflake automated ETL, and multi-currency inventory harmonization.</p>
+                                <div class="small text-muted mb-4 border-top pt-2 flex-grow-1">
+                                    <div><strong>Retainer:</strong> $20,000 / month</div>
+                                    <div><strong>Lead:</strong> Brooklyn Simmons</div>
+                                    <div><strong>Active Clients:</strong> 7 Corporate Accounts</div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Configure SLA (404)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 6: BILLING & FINANCIALS -->
+                <div class="dash-tab-pane d-none" id="tab-billing">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Enterprise Billing Ledger &amp; Cash Flow</h5>
+                            <small class="text-muted">Master corporate revenue, retainer settlements, and payment processor reconciliations.</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-file-csv me-1"></i> Export Master Ledger (404)
+                            </button>
+                            <button class="btn btn-sm btn-success text-white" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-plus me-1"></i> Generate Invoices (404)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Financial KPI Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Annual Revenue (ARR)</div>
+                                    <div class="dash-stat-value">$1,248,000</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-trend-up"></i> +22.4% YoY</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-sack-dollar"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Monthly Run-Rate (MRR)</div>
+                                    <div class="dash-stat-value">$104,000</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-repeat"></i> Predictable Retainer</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-money-bill-trend-up"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Accounts Receivable</div>
+                                    <div class="dash-stat-value">$38,600</div>
+                                    <div class="dash-stat-change down"><i class="fa-solid fa-clock"></i> 2 Invoices Pending</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-hand-holding-dollar"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Collection Rate</div>
+                                    <div class="dash-stat-value">99.2%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-shield-check"></i> Enterprise Grade</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-award"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master Invoices Ledger Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header d-flex justify-content-between align-items-center">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-file-invoice-dollar me-2"></i> Corporate Billing Statements Ledger</h6>
+                            <span class="badge bg-success">Automated Stripe &amp; ACH Sync</span>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Invoice #</th>
+                                            <th>Corporate Client</th>
+                                            <th>Billing Period</th>
+                                            <th>Amount</th>
+                                            <th>Payment Method</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>#INV-2026-1102</strong></td>
+                                            <td>Horizon Global Ventures Inc.</td>
+                                            <td>Nov 2026 (Milestone 4)</td>
+                                            <td><strong class="text-danger">$24,200.00</strong></td>
+                                            <td>Corporate Visa (•••• 4829)</td>
+                                            <td><span class="badge bg-warning text-dark">Due in 11 Days</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Statement (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>#INV-2026-1101</strong></td>
+                                            <td>Global Logistics Ltd</td>
+                                            <td>Nov 2026 Retainer</td>
+                                            <td>$18,500.00</td>
+                                            <td>Automated ACH Transfer</td>
+                                            <td><span class="badge bg-success">Settled</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Statement (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>#INV-2026-1042</strong></td>
+                                            <td>FinVanguard Group</td>
+                                            <td>Oct 2026 AI Deliverables</td>
+                                            <td>$32,000.00</td>
+                                            <td>Wire Transfer</td>
+                                            <td><span class="badge bg-success">Settled</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Statement (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>#INV-2026-1020</strong></td>
+                                            <td>Nexus Manufacturing</td>
+                                            <td>Oct 2026 ERP Staging</td>
+                                            <td>$28,500.00</td>
+                                            <td>Automated ACH Transfer</td>
+                                            <td><span class="badge bg-success">Settled</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Statement (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>#INV-2026-1015</strong></td>
+                                            <td>Aegis Biopharma Corp</td>
+                                            <td>SOC2 Compliance Audit Gate</td>
+                                            <td>$14,400.00</td>
+                                            <td>Corporate Mastercard</td>
+                                            <td><span class="badge bg-warning text-dark">Processing</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Statement (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 7: SUPPORT & HELP DESK -->
+                <div class="dash-tab-pane d-none" id="tab-support">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Global Client Support &amp; SLA Incident Desk</h5>
+                            <small class="text-muted">Multi-tenant client ticket queues, escalation response timers, and on-call partner assignments.</small>
+                        </div>
+                        <button class="btn btn-sm btn-danger text-white" onclick="window.location.href='404.html'">
+                            <i class="fa-solid fa-triangle-exclamation me-1"></i> Trigger Priority Incident (404)
+                        </button>
+                    </div>
+
+                    <!-- Support KPI Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Active Tickets</div>
+                                    <div class="dash-stat-value">4</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-circle-info"></i> Across all clients</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-ticket"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Critical (P1) Open</div>
+                                    <div class="dash-stat-value">0</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-shield-check"></i> Zero emergencies</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-circle-check"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Resolved Today</div>
+                                    <div class="dash-stat-value">19</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-bolt"></i> Fast resolution</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-check-double"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">SLA Compliance</div>
+                                    <div class="dash-stat-value">99.8%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-award"></i> Meets SLA guarantee</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-shield-halved"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master Support Queue Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header d-flex justify-content-between align-items-center">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-headset me-2"></i> Master Client Inquiries Queue</h6>
+                            <span class="badge bg-light text-dark border">Priority Tier Active</span>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Ticket ID</th>
+                                            <th>Client Account</th>
+                                            <th>Subject / Query</th>
+                                            <th>Severity</th>
+                                            <th>Assigned Partner</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>#TCK-8921</strong></td>
+                                            <td>Horizon Global Ventures</td>
+                                            <td>Staging Kubernetes Cluster Ingress SSL issue</td>
+                                            <td><span class="badge bg-danger">Critical P1</span></td>
+                                            <td>Brooklyn Simmons</td>
+                                            <td><span class="badge bg-warning text-dark">In Progress</span></td>
+                                            <td><button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Resolve (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>#TCK-8740</strong></td>
+                                            <td>Horizon Global Ventures</td>
+                                            <td>Q4 Valuation Macro sensitivity formula review</td>
+                                            <td><span class="badge bg-secondary">Normal P3</span></td>
+                                            <td>Martina Welliam</td>
+                                            <td><span class="badge bg-success">Resolved</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>#TCK-8715</strong></td>
+                                            <td>Global Logistics Ltd</td>
+                                            <td>VPC peering route table latency check</td>
+                                            <td><span class="badge bg-warning text-dark">High P2</span></td>
+                                            <td>Brooklyn Simmons</td>
+                                            <td><span class="badge bg-success">Resolved</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>#TCK-8680</strong></td>
+                                            <td>FinVanguard Group</td>
+                                            <td>PyTorch GPU CUDA driver compatibility check</td>
+                                            <td><span class="badge bg-warning text-dark">High P2</span></td>
+                                            <td>Leslie Alexander</td>
+                                            <td><span class="badge bg-success">Resolved</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 8: DOCUMENT VAULT -->
+                <div class="dash-tab-pane d-none" id="tab-vault">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Super Admin Confidential Document Vault (AES-256)</h5>
+                            <small class="text-muted">Master cryptographic key storage, multi-tenant document isolation, and enterprise compliance archives.</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-key me-1"></i> Rotate KMS Keys (404)
+                            </button>
+                            <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-cloud-arrow-up me-1"></i> Upload Master Archive (404)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- 4 Vault Category Cards -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-card h-100 p-4 text-center">
+                                <i class="fa-solid fa-folder-closed fa-3x text-warning mb-2"></i>
+                                <h6 class="fw-bold mb-1">Legal Contracts</h6>
+                                <p class="small text-muted mb-3">14 Executed MSAs &bull; 48.2 MB Encrypted</p>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Open Folder (404)</button>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-card h-100 p-4 text-center">
+                                <i class="fa-solid fa-folder-closed fa-3x text-primary mb-2"></i>
+                                <h6 class="fw-bold mb-1">Audit Reports</h6>
+                                <p class="small text-muted mb-3">28 SOC2 &amp; ISO Reports &bull; 114 MB Encrypted</p>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Open Folder (404)</button>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-card h-100 p-4 text-center">
+                                <i class="fa-solid fa-folder-closed fa-3x text-success mb-2"></i>
+                                <h6 class="fw-bold mb-1">Client Deliverables</h6>
+                                <p class="small text-muted mb-3">45 Verified Packages &bull; 340 MB Encrypted</p>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Open Folder (404)</button>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-card h-100 p-4 text-center">
+                                <i class="fa-solid fa-folder-closed fa-3x text-danger mb-2"></i>
+                                <h6 class="fw-bold mb-1">Client NDAs &amp; M&amp;A</h6>
+                                <p class="small text-muted mb-3">18 Bilateral NDAs &bull; 22.8 MB Encrypted</p>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Open Folder (404)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Master Vault File Ledger -->
+                    <div class="dash-card">
+                        <div class="dash-card-header d-flex justify-content-between align-items-center">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-vault me-2"></i> Master Cryptographic File Manifest</h6>
+                            <span class="badge bg-dark"><i class="fa-solid fa-shield-halved me-1"></i> HSM Hardware Enclave Active</span>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Encrypted Resource Title</th>
+                                            <th>Client Organization</th>
+                                            <th>Clearance Tier</th>
+                                            <th>Checksum (SHA-256)</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>2026-Master-Valuation-CapTable.xlsx.enc</strong></td>
+                                            <td>Horizon Global Ventures Inc.</td>
+                                            <td><span class="badge bg-danger">Top Secret</span></td>
+                                            <td><code class="small">a89f...38bc</code></td>
+                                            <td><button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Decrypt (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>SOC2-TypeII-Audit-Evidence-Package.pdf.enc</strong></td>
+                                            <td>FinVanguard Group</td>
+                                            <td><span class="badge bg-warning text-dark">Confidential</span></td>
+                                            <td><code class="small">c19a...77e2</code></td>
+                                            <td><button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Decrypt (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>AWS-Production-Cluster-State.tfstate.enc</strong></td>
+                                            <td>Global Logistics Ltd</td>
+                                            <td><span class="badge bg-danger">Top Secret</span></td>
+                                            <td><code class="small">f48b...12de</code></td>
+                                            <td><button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Decrypt (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 9: SYSTEM SETTINGS -->
+                <div class="dash-tab-pane d-none" id="tab-settings">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Global System Configuration &amp; Governance</h5>
+                            <small class="text-muted">Master platform identity, SSO / SAML 2.0 integration, and database backup controls.</small>
+                        </div>
+                        <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">
+                            <i class="fa-solid fa-floppy-disk me-1"></i> Save Platform Changes (404)
+                        </button>
+                    </div>
+
+                    <div class="row g-4">
+                        <!-- Column 1 -->
+                        <div class="col-xl-6">
+                            <div class="dash-card p-4">
+                                <h6 class="fw-bold mb-3"><i class="fa-solid fa-building me-2"></i> Platform Branding &amp; Multi-Tenancy</h6>
+                                <form onsubmit="window.location.href='404.html'; return false;">
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold">Platform Brand Name</label>
+                                        <input type="text" class="form-control" value="Stackly Enterprise Consulting Portal">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold">Root Administrator Notification Email</label>
+                                        <input type="email" class="form-control" value="admin@stackly.com">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label small fw-bold">Primary Domain &amp; SSL Enclave</label>
+                                        <input type="text" class="form-control" value="https://portal.stackly.com" disabled>
+                                    </div>
+                                    <div class="mb-4">
+                                        <label class="form-label small fw-bold">Enterprise SSO / Identity Provider</label>
+                                        <select class="form-select">
+                                            <option selected>Okta SAML 2.0 (Active)</option>
+                                            <option>Microsoft Azure Active Directory</option>
+                                            <option>Google Workspace Enterprise</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-dark">Update Branding (404)</button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Column 2 -->
+                        <div class="col-xl-6">
+                            <div class="dash-card p-4 mb-4">
+                                <h6 class="fw-bold mb-3"><i class="fa-solid fa-shield-halved me-2"></i> Enterprise Security Controls</h6>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="twoFactorSwitch" checked>
+                                    <label class="form-check-label small fw-bold" for="twoFactorSwitch">Enforce Two-Factor Authentication (2FA) for All Roles</label>
+                                    <div class="text-muted small">Requires TOTP app authenticator for Admin, Manager, and Client logins.</div>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="ipWhitelistSwitch" checked>
+                                    <label class="form-check-label small fw-bold" for="ipWhitelistSwitch">Enforce Corporate IP Whitelisting for Admin Access</label>
+                                    <div class="text-muted small">Restricts admin dashboard logins to verified corporate VPN CIDR blocks.</div>
+                                </div>
+                                <div class="form-check form-switch mb-4">
+                                    <input class="form-check-input" type="checkbox" id="auditStreamSwitch" checked>
+                                    <label class="form-check-label small fw-bold" for="auditStreamSwitch">Stream Immutable Audit Logs to CloudTrail / Datadog</label>
+                                    <div class="text-muted small">Real-time syslog replication to satisfy SOC2 compliance retention.</div>
+                                </div>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Save Security Policies (404)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- TAB 10: ACTIVITY & AUDIT LOGS -->
+                <div class="dash-tab-pane d-none" id="tab-logs">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h5 class="fw-bold mb-0">System Activity &amp; Audit Trail</h5>
+                        <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'"><i class="fa-solid fa-trash-can me-1"></i> Clear Logs (404)</button>
+                    </div>
+                    <div class="dash-card">
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>Actor</th>
+                                            <th>Event</th>
+                                            <th>IP Address</th>
+                                            <th>Result</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Nov 04, 2026 11:05</td>
+                                            <td>admin@stackly.com</td>
+                                            <td>Session Login</td>
+                                            <td>192.168.1.1</td>
+                                            <td><span class="badge bg-success">Success</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nov 04, 2026 10:48</td>
+                                            <td>system_cron</td>
+                                            <td>Automated Daily Backup</td>
+                                            <td>127.0.0.1</td>
+                                            <td><span class="badge bg-success">Completed</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Nov 04, 2026 09:12</td>
+                                            <td>marcus@stackly.com</td>
+                                            <td>Workstream Milestone Update</td>
+                                            <td>172.16.0.44</td>
+                                            <td><span class="badge bg-primary">Logged</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        // Check session
+        if (BizlyAuth.isLoggedIn()) {
+            const user = BizlyAuth.getUser();
+            document.querySelectorAll('.auth-user-name').forEach(el => el.textContent = user.name || user.email);
+            document.querySelectorAll('.auth-user-role').forEach(el => el.textContent = user.role.toUpperCase());
+        }
+
+        // Mobile Sidebar Drawer Toggle
+        const openBtn = document.getElementById('openSidebarBtn');
+        const closeBtn = document.getElementById('closeSidebarBtn');
+        const sidebar = document.getElementById('dashSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar(open) {
+            if (open) {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+            } else {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+        }
+
+        if (openBtn) openBtn.addEventListener('click', () => toggleSidebar(true));
+        if (closeBtn) closeBtn.addEventListener('click', () => toggleSidebar(false));
+        if (overlay) overlay.addEventListener('click', () => toggleSidebar(false));
+
+        // TAB SWITCHING INSIDE THIS SINGLE FILE
+        document.querySelectorAll('.dash-nav-link[data-tab]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.getAttribute('data-tab');
+
+                // Update active link
+                document.querySelectorAll('.dash-nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                // Switch visible pane
+                document.querySelectorAll('.dash-tab-pane').forEach(pane => pane.classList.add('d-none'));
+                const target = document.getElementById(tabId);
+                if (target) {
+                    target.classList.remove('d-none');
+                }
+
+                // Update title
+                const spanText = this.querySelector('span') ? this.querySelector('span').textContent.replace(/^\d+\.\s*/, '') : '';
+                const titleEl = document.getElementById('dashCurrentTabTitle');
+                if (titleEl && spanText) {
+                    titleEl.textContent = spanText;
+                }
+
+                // Close mobile sidebar on select
+                if (window.innerWidth < 992) {
+                    toggleSidebar(false);
+                }
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Logo click switches to first dashboard tab (does not navigate to index.html)
+        const brandLogo = document.getElementById('brandLogoLink');
+        if (brandLogo) {
+            brandLogo.addEventListener('click', function(e) {
+                e.preventDefault();
+                const firstTab = document.querySelector('.dash-nav-link[data-tab]');
+                if (firstTab) {
+                    firstTab.click();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

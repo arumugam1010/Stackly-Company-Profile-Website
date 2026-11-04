@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="author" content="Valorwide">
+        <meta name="description" content="Stackly Business & corporate agency HTML template">
+        <title>Account Login - Stackly</title>
+        <!-- Favicon -->
+        <link rel="shortcut icon" href="images/favicon.svg">
+        <!-- Bootstrap min.css -->
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <!-- FontAwesome -->
+        <link rel="stylesheet" href="css/all.min.css">
+        <!-- Main.css -->
+        <link rel="stylesheet" href="css/main.css">
+        <style>
+            body.auth-page-body {
+                min-height: 100vh;
+                background-color: #f7f9fb;
+                background-image: radial-gradient(circle at 50% 20%, rgba(197, 168, 128, 0.12) 0%, transparent 65%);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding: 40px 20px;
+                margin: 0;
+                font-family: "Plus Jakarta Sans", sans-serif;
+                color: #1C1A1D;
+            }
+            .auth-container {
+                max-width: 500px;
+                width: 100%;
+            }
+            .auth-card {
+                background: #ffffff;
+                border-radius: 18px;
+                box-shadow: 0 20px 45px rgba(28, 26, 29, 0.08);
+                padding: 42px 36px;
+                border: 1px solid #edf0f4;
+                position: relative;
+                overflow: hidden;
+            }
+            .auth-card::before {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, #C5A880, #1C1A1D, #C5A880);
+            }
+            .auth-form-label {
+                font-weight: 600;
+                font-size: 14px;
+                margin-bottom: 7px;
+                color: #1C1A1D;
+                display: block;
+            }
+            .auth-input-group {
+                position: relative;
+                margin-bottom: 20px;
+            }
+            .auth-input-group input, .auth-input-group select {
+                width: 100%;
+                height: 50px;
+                padding: 12px 48px 12px 18px;
+                border: 1px solid #dce0e5;
+                border-radius: 8px;
+                font-size: 15px;
+                transition: all 0.3s;
+                background-color: #fafbfc;
+                color: #1C1A1D !important;
+                -webkit-text-fill-color: #1C1A1D !important;
+                caret-color: #1C1A1D !important;
+            }
+            .auth-input-group input:focus, .auth-input-group select:focus {
+                border-color: #C5A880;
+                background-color: #ffffff;
+                outline: none;
+                box-shadow: 0 0 0 3px rgba(197, 168, 128, 0.15);
+                color: #1C1A1D !important;
+                -webkit-text-fill-color: #1C1A1D !important;
+                caret-color: #1C1A1D !important;
+            }
+            .auth-input-group input::placeholder {
+                color: #8c95a0 !important;
+                -webkit-text-fill-color: #8c95a0 !important;
+                opacity: 1;
+            }
+            .auth-input-group input:-webkit-autofill,
+            .auth-input-group input:-webkit-autofill:hover, 
+            .auth-input-group input:-webkit-autofill:focus {
+                -webkit-text-fill-color: #1C1A1D !important;
+                -webkit-box-shadow: 0 0 0px 1000px #f4f7fa inset !important;
+            }
+            .toggle-password {
+                position: absolute;
+                right: 16px;
+                top: 50%;
+                transform: translateY(-50%);
+                cursor: pointer;
+                color: #6c757d;
+                font-size: 18px;
+                padding: 4px;
+                z-index: 5;
+                transition: color 0.2s;
+            }
+            .toggle-password:hover {
+                color: #C5A880;
+            }
+            
+            .role-badge-option {
+                cursor: pointer;
+                border: 2px solid #e0e0e0;
+                border-radius: 10px;
+                padding: 10px 12px;
+                text-align: center;
+                transition: all 0.2s;
+            }
+            .role-badge-option:hover {
+                border-color: #C5A880;
+            }
+            .role-radio:checked + .role-badge-option {
+                border-color: #C5A880;
+                background: #fdfaf6;
+            }
+            .btn-auth-submit {
+                background: #1C1A1D;
+                color: #ffffff;
+                border: 1px solid #1C1A1D;
+                border-radius: 8px;
+                padding: 14px 24px;
+                font-weight: 600;
+                font-size: 15px;
+                width: 100%;
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                transition: all 0.3s;
+                text-decoration: none;
+                cursor: pointer;
+            }
+            .btn-auth-submit:hover {
+                background: #C5A880;
+                border-color: #C5A880;
+                color: #1C1A1D;
+                box-shadow: 0 8px 20px rgba(197, 168, 128, 0.3);
+            }
+            .auth-back-link {
+                color: #6c757d;
+                text-decoration: none;
+                font-size: 14px;
+                font-weight: 500;
+                transition: color 0.2s;
+            }
+            .auth-back-link:hover {
+                color: #1C1A1D;
+            }
+        </style>
+    </head>
+    <body class="auth-page-body">
+
+        <div class="auth-container">
+            <div class="auth-card">
+                <!-- Brand Header -->
+                <div class="text-center mb-4">
+                    <a href="index.html" title="Back to Stackly Home">
+                        <img src="images/stackly-logo.webp" alt="Stackly Logo" style="height: 40px;" class="mb-2">
+                    </a>
+                    <h3 class="fw-bold mt-2 mb-1" style="color: #1C1A1D; font-size: 24px;">Welcome Back</h3>
+                    <p class="text-muted small mb-0">Sign in to access your role-based dashboard</p>
+                </div>
+
+                <!-- Alert Box -->
+                <div id="loginAlert" class="alert d-none" role="alert"></div>
+
+                <!-- Login Form -->
+                <form id="loginForm" novalidate>
+                    <!-- Email Input -->
+                    <div class="mb-3">
+                        <label class="auth-form-label" for="loginEmail">Email Address *</label>
+                        <div class="auth-input-group">
+                            <input type="email" id="loginEmail" placeholder="e.g. user@example.com" required autocomplete="email">
+                        </div>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="mb-3">
+                        <label class="auth-form-label" for="loginPassword">Password *</label>
+                        <div class="auth-input-group">
+                            <input type="password" id="loginPassword" placeholder="Enter your password" required autocomplete="current-password">
+                            <i class="fa-regular fa-eye toggle-password" id="togglePassword" title="Show password"></i>
+                        </div>
+                    </div>
+
+                    <!-- Role Selection (3 Roles) -->
+                    <div class="mb-3">
+                        <label class="auth-form-label">Sign In As Role *</label>
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <input type="radio" name="loginRole" value="Admin" id="roleAdmin" class="role-radio d-none">
+                                <label for="roleAdmin" class="role-badge-option w-100">
+                                    <i class="fa-solid fa-shield-halved fa-lg mb-2 text-warning d-block"></i>
+                                    <strong class="d-block" style="font-size: 13px;">Admin</strong>
+                                    <small class="text-muted" style="font-size: 11px;">Full Access</small>
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <input type="radio" name="loginRole" value="Manager" id="roleManager" class="role-radio d-none">
+                                <label for="roleManager" class="role-badge-option w-100">
+                                    <i class="fa-solid fa-briefcase fa-lg mb-2 text-primary d-block"></i>
+                                    <strong class="d-block" style="font-size: 13px;">Manager</strong>
+                                    <small class="text-muted" style="font-size: 11px;">Ops &amp; Projects</small>
+                                </label>
+                            </div>
+                            <div class="col-4">
+                                <input type="radio" name="loginRole" value="Client" id="roleClient" class="role-radio d-none" checked>
+                                <label for="roleClient" class="role-badge-option w-100">
+                                    <i class="fa-solid fa-user-tie fa-lg mb-2 text-success d-block"></i>
+                                    <strong class="d-block" style="font-size: 13px;">Client</strong>
+                                    <small class="text-muted" style="font-size: 11px;">Client Portal</small>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" id="rememberMe" checked>
+                            <label class="form-check-label text-muted" for="rememberMe" style="font-size: 14px;">Remember me</label>
+                        </div>
+                        <a href="404.html" style="font-size: 13px; color: #C5A880; font-weight: 500; text-decoration: none;">Forgot Password?</a>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn-auth-submit">
+                        <span>Sign In to Dashboard</span>
+                        <i class="fa-solid fa-arrow-right ms-1"></i>
+                    </button>
+
+                    <!-- Link to Register -->
+                    <div class="text-center mt-4 pt-3 border-top">
+                        <p class="text-muted small mb-0">
+                            Don't have an account? 
+                            <a href="register.html" class="fw-bold" style="color: #C5A880; text-decoration: none;">Sign Up</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Page Bottom Actions -->
+            <div class="text-center mt-3">
+                <a href="index.html" class="auth-back-link">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Return to Website
+                </a>
+            </div>
+            <div class="text-center mt-2 text-muted" style="font-size: 12px;">
+                &copy; 2026 Stackly. All Rights Reserved.
+            </div>
+        </div>
+
+        <!-- Scripts -->
+        <script src="js/jquery-3.7.1.min.js"></script>
+        <script src="js/bootstrap.bundle.min.js"></script>
+        <script src="js/auth.js"></script>
+        <script src="js/main.js"></script>
+
+        <script>
+            // Live password requirement checklist checker
+            const pwInput = document.getElementById('loginPassword');
+            const togglePw = document.getElementById('togglePassword');
+            const loginForm = document.getElementById('loginForm');
+            const alertBox = document.getElementById('loginAlert');
+
+            // Password show/hide toggle
+            togglePw.addEventListener('click', function(e) {
+                e.preventDefault();
+                const isPassword = pwInput.getAttribute('type') === 'password';
+                if (isPassword) {
+                    pwInput.setAttribute('type', 'text');
+                    this.classList.remove('fa-eye');
+                    this.classList.add('fa-eye-slash');
+                    this.setAttribute('title', 'Hide password');
+                } else {
+                    pwInput.setAttribute('type', 'password');
+                    this.classList.remove('fa-eye-slash');
+                    this.classList.add('fa-eye');
+                    this.setAttribute('title', 'Show password');
+                }
+                pwInput.focus();
+            });
+
+            
+
+            // Form submission validation
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alertBox.className = 'alert d-none';
+
+                const email = document.getElementById('loginEmail').value.trim();
+                const password = pwInput.value;
+                const roleRadio = document.querySelector('input[name="loginRole"]:checked');
+                const role = roleRadio ? roleRadio.value : 'Client';
+
+                // 1. Validate email
+                const emailCheck = BizlyAuth.validateEmail(email);
+                if (!emailCheck.valid) {
+                    alertBox.className = 'alert alert-danger';
+                    alertBox.innerHTML = '<i class="fa-solid fa-circle-exclamation me-2"></i>' + emailCheck.message;
+                    document.getElementById('loginEmail').focus();
+                    return;
+                }
+
+                // 2. Validate password
+                const pwCheck = BizlyAuth.validatePassword(password);
+                if (!pwCheck.valid) {
+                    alertBox.className = 'alert alert-danger';
+                    alertBox.innerHTML = '<i class="fa-solid fa-circle-exclamation me-2"></i>' + pwCheck.message;
+                    pwInput.focus();
+                    return;
+                }
+
+                // Success login
+                const user = BizlyAuth.login(email, role, email.split('@')[0]);
+                alertBox.className = 'alert alert-success';
+                alertBox.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i> Login successful! Redirecting to ' + role + ' Dashboard...';
+
+                setTimeout(() => {
+                    window.location.href = BizlyAuth.getDashboardUrl(role);
+                }, 800);
+            });
+        </script>
+    </body>
+</html>

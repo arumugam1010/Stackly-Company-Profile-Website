@@ -1,0 +1,1643 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Manager Dashboard - Stackly Operations Hub</title>
+    <link rel="shortcut icon" href="images/favicon.svg">
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/all.min.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Mobile Sidebar Backdrop Overlay -->
+    <div class="dash-sidebar-overlay" id="sidebarOverlay"></div>
+
+    <div class="dashboard-layout">
+        <!-- 10-Item Sidebar -->
+        <aside class="dash-sidebar" id="dashSidebar">
+            <div class="dash-sidebar-header">
+                <a href="#tab-ops-overview" class="dash-sidebar-brand" id="brandLogoLink" title="Go to Overview">
+                    <img src="images/stackly-logo.webp" alt="Stackly Logo">
+                </a>
+                <button class="btn btn-sm text-white d-lg-none" id="closeSidebarBtn">
+                    <i class="fa-solid fa-xmark fa-lg"></i>
+                </button>
+            </div>
+
+            <!-- User Profile Card Inside Sidebar -->
+            <div class="px-3 pt-3 pb-2">
+                <div class="d-flex align-items-center gap-2 p-2 rounded" style="background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.08);">
+                    <div class="dash-user-avatar" style="width: 34px; height: 34px; font-size: 14px; background: #0d6efd; color:#fff;">M</div>
+                    <div class="overflow-hidden flex-grow-1">
+                        <div class="dash-user-name auth-user-name fw-bold text-white small" style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">manager@bizly.com</div>
+                        <span class="dash-user-role-badge role-manager auth-user-role" style="font-size: 10px; padding: 1px 6px;">MANAGER</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="dash-sidebar-menu">
+                <div class="px-3 mb-2 small text-uppercase text-muted fw-bold" style="font-size: 11px; letter-spacing: 1px;">Operations Nav </div>
+                <ul class="dash-nav-list">
+                    <!-- 1. Overview -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-overview" class="dash-nav-link active" data-tab="tab-ops-overview">
+                            <i class="fa-solid fa-gauge-high"></i>
+                            <span>Operations Overview</span>
+                        </a>
+                    </li>
+                    <!-- 2. Projects In Progress -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-projects" class="dash-nav-link" data-tab="tab-ops-projects">
+                            <i class="fa-solid fa-bars-progress"></i>
+                            <span>Active Projects</span>
+                        </a>
+                    </li>
+                    <!-- 3. Team Management -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-team" class="dash-nav-link" data-tab="tab-ops-team">
+                            <i class="fa-solid fa-people-group"></i>
+                            <span>Team Roster</span>
+                        </a>
+                    </li>
+                    <!-- 4. Client Deliverables -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-deliverables" class="dash-nav-link" data-tab="tab-ops-deliverables">
+                            <i class="fa-solid fa-clipboard-check"></i>
+                            <span>Deliverables</span>
+                        </a>
+                    </li>
+                    <!-- 5. Sprint Tracking -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-sprints" class="dash-nav-link" data-tab="tab-ops-sprints">
+                            <i class="fa-solid fa-stopwatch-20"></i>
+                            <span>Sprint Milestones</span>
+                        </a>
+                    </li>
+                    <!-- 6. Budget & Resource Cost -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-budget" class="dash-nav-link" data-tab="tab-ops-budget">
+                            <i class="fa-solid fa-hand-holding-dollar"></i>
+                            <span>Budget Allocation</span>
+                        </a>
+                    </li>
+                    <!-- 7. Client Communication -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-comms" class="dash-nav-link" data-tab="tab-ops-comms">
+                            <i class="fa-solid fa-envelope-open-text"></i>
+                            <span>Client Inquiries</span>
+                        </a>
+                    </li>
+                    <!-- 8. Resource Library -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-assets" class="dash-nav-link" data-tab="tab-ops-assets">
+                            <i class="fa-solid fa-box-archive"></i>
+                            <span>Asset Repository</span>
+                        </a>
+                    </li>
+                    <!-- 9. Workflow Settings -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-settings" class="dash-nav-link" data-tab="tab-ops-settings">
+                            <i class="fa-solid fa-sliders"></i>
+                            <span>Workflow Settings</span>
+                        </a>
+                    </li>
+                    <!-- 10. Performance Audit -->
+                    <li class="dash-nav-item">
+                        <a href="#tab-ops-logs" class="dash-nav-link" data-tab="tab-ops-logs">
+                            <i class="fa-solid fa-chart-column"></i>
+                            <span>Performance Logs</span>
+                        </a>
+                    </li>
+
+                    <!-- Inside Actions (Logout inside Sidebar) -->
+                    <li class="my-2 border-top border-secondary border-opacity-25"></li>
+                    <li class="dash-nav-item">
+                        <a href="#" class="dash-nav-link text-danger btn-dash-logout" onclick="BizlyAuth.logout('index.html'); return false;">
+                            <i class="fa-solid fa-right-from-bracket text-danger"></i>
+                            <span class="text-danger fw-bold">Logout</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Dashboard View Area -->
+        <main class="dash-main">
+            <!-- Topbar (Clean Header without redundant right action column) -->
+            <header class="dash-topbar">
+                <div class="dash-topbar-left">
+                    <button class="dash-sidebar-toggle" id="openSidebarBtn" aria-label="Toggle Navigation">
+                        <i class="fa-regular fa-bars-staggered"></i>
+                    </button>
+                    <div>
+                        <h5 class="mb-0 fw-bold" id="dashCurrentTabTitle">Operations Overview</h5>
+                        <small class="text-muted d-none d-md-block">Project &amp; Team Delivery Center</small>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content Panes -->
+            <div class="dash-content">
+
+                <!-- TAB 1: OPERATIONS OVERVIEW -->
+                <div class="dash-tab-pane" id="tab-ops-overview">
+                    <div class="alert alert-light border rounded-3 p-3 mb-4 d-flex flex-wrap justify-content-between align-items-center">
+                        <div>
+                            <h6 class="fw-bold mb-1"><i class="fa-solid fa-briefcase text-primary me-2"></i> Current Sprint: Week 42 Operational Cycle</h6>
+                            <small class="text-muted">You are managing 14 cross-functional corporate consulting initiatives.</small>
+                        </div>
+                        <div class="mt-2 mt-sm-0">
+                            <button class="btn btn-sm btn-outline-dark me-2" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-file-pdf me-1"></i> Sprint PDF
+                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-plus me-1"></i> Assign Task
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Active Projects</div>
+                                    <div class="dash-stat-value">24</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-up"></i> 6 on final phase</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-diagram-project"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Team Members</div>
+                                    <div class="dash-stat-value">48</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-check"></i> 94% utilization</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-user-group"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Completed Deliverables</div>
+                                    <div class="dash-stat-value">138</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-up"></i> +22 this month</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-circle-check"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Pending Approvals</div>
+                                    <div class="dash-stat-value">7</div>
+                                    <div class="dash-stat-change down"><i class="fa-solid fa-hourglass-half"></i> Needs review</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-signature"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-xl-8">
+                            <div class="dash-card">
+                                <div class="dash-card-header">
+                                    <h6 class="dash-card-title"><i class="fa-solid fa-list-check me-2"></i> Current Consulting Workstreams</h6>
+                                    <button class="btn btn-sm btn-outline-secondary" onclick="window.location.href='404.html'">Filter</button>
+                                </div>
+                                <div class="dash-card-body p-0">
+                                    <div class="table-responsive">
+                                        <table class="dash-table">
+                                            <thead>
+                                                <tr>
+                                                    <th>Project Name</th>
+                                                    <th>Lead</th>
+                                                    <th>Progress</th>
+                                                    <th>Deadline</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td><strong>Enterprise Cloud Migration</strong></td>
+                                                    <td>Brooklyn Simmons</td>
+                                                    <td><span class="badge bg-success">85%</span></td>
+                                                    <td>Nov 18, 2026</td>
+                                                    <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Global Risk &amp; Compliance Audit</strong></td>
+                                                    <td>Martina Welliam</td>
+                                                    <td><span class="badge bg-warning text-dark">60%</span></td>
+                                                    <td>Dec 02, 2026</td>
+                                                    <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect</button></td>
+                                                </tr>
+                                                <tr>
+                                                    <td><strong>Supply Chain Automation</strong></td>
+                                                    <td>Esther Howard</td>
+                                                    <td><span class="badge bg-info text-dark">40%</span></td>
+                                                    <td>Dec 15, 2026</td>
+                                                    <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect</button></td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="dash-card">
+                                <div class="dash-card-header">
+                                    <h6 class="dash-card-title"><i class="fa-solid fa-bolt me-2"></i> Quick Manager Actions</h6>
+                                </div>
+                                <div class="dash-card-body">
+                                    <div class="d-grid gap-2">
+                                        <button class="btn btn-outline-dark text-start py-2" onclick="window.location.href='404.html'">
+                                            <i class="fa-solid fa-calendar-plus me-2 text-primary"></i> Schedule Team Sync
+                                        </button>
+                                        <button class="btn btn-outline-dark text-start py-2" onclick="window.location.href='404.html'">
+                                            <i class="fa-solid fa-file-export me-2 text-success"></i> Export Milestone Report
+                                        </button>
+                                        <button class="btn btn-outline-dark text-start py-2" onclick="window.location.href='404.html'">
+                                            <i class="fa-solid fa-stamp me-2 text-warning"></i> Sign Off Deliverables
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 2: ACTIVE PROJECTS -->
+                <div class="dash-tab-pane d-none" id="tab-ops-projects">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Active Operations Projects &amp; Workstreams (24 Active)</h5>
+                            <small class="text-muted">Operational sprint oversight, milestone tracking, and cross-functional team execution.</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-file-export me-1"></i> Export Gantt (404)
+                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-plus me-1"></i> New Workstream (404)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Project KPI Stats Row -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Active Workstreams</div>
+                                    <div class="dash-stat-value">24</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-circle-check"></i> 22 On Track</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-diagram-project"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Sprints in Flight</div>
+                                    <div class="dash-stat-value">5</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-person-running"></i> Sprint 42 Active</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-bars-progress"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Critical Blockers</div>
+                                    <div class="dash-stat-value">0</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-shield-check"></i> All Clear</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-circle-check"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Delivery Velocity</div>
+                                    <div class="dash-stat-value">96.4%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-trend-up"></i> +4.2% vs target</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-gauge-high"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 4 Project Cards in Responsive Grid -->
+                    <div class="row g-4 mb-4">
+                        <!-- Project 1 -->
+                        <div class="col-xl-6">
+                            <div class="dash-card h-100 p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle">Sprint 42 &bull; Testing</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle">P1 High</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">Enterprise Cloud Migration &amp; Hybrid Data Center</h6>
+                                <p class="small text-muted mb-3">Client: Global Logistics Ltd &bull; Phase: Final Production Cluster Cutover</p>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between small text-muted mb-1">
+                                        <span>Milestone Progress (4 of 5)</span>
+                                        <span class="fw-bold text-dark">85%</span>
+                                    </div>
+                                    <div class="progress" style="height: 7px;">
+                                        <div class="progress-bar bg-success" style="width: 85%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-2 small text-muted mb-3 pt-2 border-top">
+                                    <div class="col-6"><strong>Allocated:</strong> $120,000</div>
+                                    <div class="col-6"><strong>Burned:</strong> $98,500 (82%)</div>
+                                    <div class="col-6"><strong>Staffing:</strong> 4 Engineers</div>
+                                    <div class="col-6"><strong>Due Date:</strong> Dec 15, 2026</div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <img src="images/02.webp" alt="Lead" class="rounded-circle" style="width: 28px; height: 28px; object-fit: cover;">
+                                        <small class="fw-bold">Brooklyn Simmons</small>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Manage (404)</button>
+                                        <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Deliverables (404)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 2 -->
+                        <div class="col-xl-6">
+                            <div class="dash-card h-100 p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-primary-subtle text-primary border border-primary-subtle">Sprint 19 &bull; Staging</span>
+                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">P2 Medium</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">Omnichannel Retail Strategy &amp; Automation</h6>
+                                <p class="small text-muted mb-3">Client: Horizon Brands &bull; Phase: Supply Chain Inventory Harmonization</p>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between small text-muted mb-1">
+                                        <span>Milestone Progress (3 of 6)</span>
+                                        <span class="fw-bold text-dark">50%</span>
+                                    </div>
+                                    <div class="progress" style="height: 7px;">
+                                        <div class="progress-bar bg-primary" style="width: 50%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-2 small text-muted mb-3 pt-2 border-top">
+                                    <div class="col-6"><strong>Allocated:</strong> $85,000</div>
+                                    <div class="col-6"><strong>Burned:</strong> $42,500 (50%)</div>
+                                    <div class="col-6"><strong>Staffing:</strong> 3 Consultants</div>
+                                    <div class="col-6"><strong>Due Date:</strong> Jan 20, 2027</div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <img src="images/01.webp" alt="Lead" class="rounded-circle" style="width: 28px; height: 28px; object-fit: cover;">
+                                        <small class="fw-bold">Martina Welliam</small>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Manage (404)</button>
+                                        <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Deliverables (404)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 3 -->
+                        <div class="col-xl-6">
+                            <div class="dash-card h-100 p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-info-subtle text-info-emphasis border border-info-subtle">Sprint 31 &bull; Execution</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle">P1 High</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">Global ERP SAP to Snowflake Data Staging</h6>
+                                <p class="small text-muted mb-3">Client: Nexus Manufacturing &bull; Phase: ETL Data Pipeline Verification</p>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between small text-muted mb-1">
+                                        <span>Milestone Progress (4 of 6)</span>
+                                        <span class="fw-bold text-dark">68%</span>
+                                    </div>
+                                    <div class="progress" style="height: 7px;">
+                                        <div class="progress-bar bg-info" style="width: 68%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-2 small text-muted mb-3 pt-2 border-top">
+                                    <div class="col-6"><strong>Allocated:</strong> $110,000</div>
+                                    <div class="col-6"><strong>Burned:</strong> $74,800 (68%)</div>
+                                    <div class="col-6"><strong>Staffing:</strong> 5 Engineers</div>
+                                    <div class="col-6"><strong>Due Date:</strong> Feb 10, 2027</div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <img src="images/03.webp" alt="Lead" class="rounded-circle" style="width: 28px; height: 28px; object-fit: cover;">
+                                        <small class="fw-bold">Leslie Alexander</small>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Manage (404)</button>
+                                        <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Deliverables (404)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Project 4 -->
+                        <div class="col-xl-6">
+                            <div class="dash-card h-100 p-4">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-warning-subtle text-warning-emphasis border border-warning-subtle">Sprint Final &bull; QA</span>
+                                    <span class="badge bg-danger-subtle text-danger border border-danger-subtle">P1 Critical</span>
+                                </div>
+                                <h6 class="fw-bold mb-1">Corporate AI Risk Scoring &amp; Telemetry Pipeline</h6>
+                                <p class="small text-muted mb-3">Client: FinVanguard Group &bull; Phase: Security Compliance &amp; Model Audit</p>
+                                
+                                <div class="mb-3">
+                                    <div class="d-flex justify-content-between small text-muted mb-1">
+                                        <span>Milestone Progress (5 of 5)</span>
+                                        <span class="fw-bold text-dark">92%</span>
+                                    </div>
+                                    <div class="progress" style="height: 7px;">
+                                        <div class="progress-bar bg-warning" style="width: 92%;"></div>
+                                    </div>
+                                </div>
+
+                                <div class="row g-2 small text-muted mb-3 pt-2 border-top">
+                                    <div class="col-6"><strong>Allocated:</strong> $75,000</div>
+                                    <div class="col-6"><strong>Burned:</strong> $69,000 (92%)</div>
+                                    <div class="col-6"><strong>Staffing:</strong> 3 Engineers</div>
+                                    <div class="col-6"><strong>Due Date:</strong> Nov 30, 2026</div>
+                                </div>
+
+                                <div class="d-flex justify-content-between align-items-center pt-2 border-top">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <img src="images/05.webp" alt="Lead" class="rounded-circle" style="width: 28px; height: 28px; object-fit: cover;">
+                                        <small class="fw-bold">Cody Fisher</small>
+                                    </div>
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Manage (404)</button>
+                                        <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Deliverables (404)</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Workstream Execution Schedule Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header d-flex justify-content-between align-items-center">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-calendar-days me-2"></i> Upcoming Operational Sprint Deliveries</h6>
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">View Master Jira (404)</button>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Delivery Gate</th>
+                                            <th>Project</th>
+                                            <th>Sprint</th>
+                                            <th>Lead Assignee</th>
+                                            <th>Deadline</th>
+                                            <th>Health</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Cluster Production Cutover</strong></td>
+                                            <td>Cloud Migration</td>
+                                            <td>Sprint 42</td>
+                                            <td>Brooklyn Simmons</td>
+                                            <td>Nov 15, 2026</td>
+                                            <td><span class="badge bg-success">On Schedule</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Review (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>AI Model Weights &amp; Benchmark</strong></td>
+                                            <td>Corporate AI Risk</td>
+                                            <td>Sprint Final</td>
+                                            <td>Leslie Alexander</td>
+                                            <td>Nov 22, 2026</td>
+                                            <td><span class="badge bg-success">On Schedule</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Review (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Supply Chain Schema Staging</strong></td>
+                                            <td>Retail Strategy</td>
+                                            <td>Sprint 19</td>
+                                            <td>Martina Welliam</td>
+                                            <td>Dec 05, 2026</td>
+                                            <td><span class="badge bg-warning text-dark">Attention Needed</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Review (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 3: TEAM ROSTER -->
+                <div class="dash-tab-pane d-none" id="tab-ops-team">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Consulting Staff Capacity &amp; Resource Allocation</h5>
+                            <small class="text-muted">Staffing directory, billable utilization rates, and active engagement commitments.</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-file-excel me-1"></i> Export Headcount Matrix (404)
+                            </button>
+                            <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-user-plus me-1"></i> Add Team Member (404)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Team Capacity Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Total Headcount</div>
+                                    <div class="dash-stat-value">16</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-user-check"></i> 100% Active</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-users"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Avg Utilization</div>
+                                    <div class="dash-stat-value">88.5%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-chart-line"></i> Optimal range</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-briefcase"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Available Capacity</div>
+                                    <div class="dash-stat-value">11.5%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-clock"></i> 48 hrs / week</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-battery-half"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Open Requisitions</div>
+                                    <div class="dash-stat-value">3</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-user-plus"></i> Hiring actively</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-address-card"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Comprehensive Team Roster Table -->
+                    <div class="dash-card mb-4">
+                        <div class="dash-card-header d-flex justify-content-between align-items-center">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-users-gear me-2"></i> Senior Consulting &amp; Technical Staff</h6>
+                            <span class="badge bg-light text-dark border">6 Senior Staff Members</span>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Consultant / Engineer</th>
+                                            <th>Role &amp; Specialty</th>
+                                            <th>Active Engagements</th>
+                                            <th>Weekly Utilization</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <img src="images/02.webp" alt="Avatar" class="rounded-circle" style="width: 36px; height: 36px; object-fit: cover;">
+                                                    <div>
+                                                        <strong>Brooklyn Simmons</strong>
+                                                        <div class="small text-muted">b.simmons@stackly.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Cloud Architect (AWS/K8s)</td>
+                                            <td>3 Projects (Lead)</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-success" style="width: 90%;"></div>
+                                                    </div>
+                                                    <span class="fw-bold small">90%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Reassign (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <img src="images/01.webp" alt="Avatar" class="rounded-circle" style="width: 36px; height: 36px; object-fit: cover;">
+                                                    <div>
+                                                        <strong>Martina Welliam</strong>
+                                                        <div class="small text-muted">m.welliam@stackly.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Executive Strategy Partner</td>
+                                            <td>4 Projects (Partner Lead)</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-danger" style="width: 95%;"></div>
+                                                    </div>
+                                                    <span class="fw-bold small">95%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Reassign (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <img src="images/03.webp" alt="Avatar" class="rounded-circle" style="width: 36px; height: 36px; object-fit: cover;">
+                                                    <div>
+                                                        <strong>Leslie Alexander</strong>
+                                                        <div class="small text-muted">l.alexander@stackly.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Principal AI / Data Engineer</td>
+                                            <td>3 Projects</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-primary" style="width: 85%;"></div>
+                                                    </div>
+                                                    <span class="fw-bold small">85%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Reassign (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <img src="images/05.webp" alt="Avatar" class="rounded-circle" style="width: 36px; height: 36px; object-fit: cover;">
+                                                    <div>
+                                                        <strong>Cody Fisher</strong>
+                                                        <div class="small text-muted">c.fisher@stackly.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Risk &amp; SOC2 Compliance Lead</td>
+                                            <td>2 Projects</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-success" style="width: 75%;"></div>
+                                                    </div>
+                                                    <span class="fw-bold small">75%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Reassign (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <img src="images/author.webp" alt="Avatar" class="rounded-circle" style="width: 36px; height: 36px; object-fit: cover;">
+                                                    <div>
+                                                        <strong>Esther Howard</strong>
+                                                        <div class="small text-muted">e.howard@stackly.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>Senior Operations Analyst</td>
+                                            <td>3 Projects</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-primary" style="width: 80%;"></div>
+                                                    </div>
+                                                    <span class="fw-bold small">80%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Reassign (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <img src="images/client-1.webp" alt="Avatar" class="rounded-circle" style="width: 36px; height: 36px; object-fit: cover;">
+                                                    <div>
+                                                        <strong>Jerome Bell</strong>
+                                                        <div class="small text-muted">j.bell@stackly.com</div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>DevSecOps Infrastructure Eng</td>
+                                            <td>2 Projects</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-success" style="width: 70%;"></div>
+                                                    </div>
+                                                    <span class="fw-bold small">70%</span>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">Active</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Reassign (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 4: DELIVERABLE REVIEWS -->
+                <div class="dash-tab-pane d-none" id="tab-ops-deliverables">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">QA Review &amp; Client Deliverable Pipeline</h5>
+                            <small class="text-muted">Review, verify, and approve technical deliverables prior to client portal release.</small>
+                        </div>
+                        <button class="btn btn-sm btn-primary" onclick="window.location.href='404.html'">
+                            <i class="fa-solid fa-plus me-1"></i> New QA Review Ticket (404)
+                        </button>
+                    </div>
+
+                    <!-- Deliverables QA Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Pending QA Review</div>
+                                    <div class="dash-stat-value">3</div>
+                                    <div class="dash-stat-change down"><i class="fa-solid fa-clock"></i> Requires Sign-off</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-hourglass-start"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Approved This Week</div>
+                                    <div class="dash-stat-value">14</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-check"></i> Released to Client</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-circle-check"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Revision Rate</div>
+                                    <div class="dash-stat-value">2.1%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-shield-halved"></i> High Quality Gate</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-award"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Avg QA Turnaround</div>
+                                    <div class="dash-stat-value">1.2 Days</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-bolt"></i> Fast Path</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-stopwatch"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- QA Review Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-clipboard-check me-2"></i> Deliverables Queue &amp; Sign-off Matrix</h6>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Deliverable Asset</th>
+                                            <th>Engagement</th>
+                                            <th>Author / Contributor</th>
+                                            <th>Review Gate</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong>Terraform AWS Production VPC Blueprint v2.1</strong>
+                                                <div class="small text-muted">ZIP &bull; 14.8 MB &bull; Infrastructure as Code</div>
+                                            </td>
+                                            <td>Cloud Migration</td>
+                                            <td>Brooklyn Simmons</td>
+                                            <td>Security Peer Review</td>
+                                            <td><span class="badge bg-warning text-dark">Under Review</span></td>
+                                            <td><button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Review &amp; Approve (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Q4 Valuation Macro &amp; Balance Sheet Scenario</strong>
+                                                <div class="small text-muted">XLSX &bull; 8.6 MB &bull; Financial Sensitivity Model</div>
+                                            </td>
+                                            <td>Financial Advisory</td>
+                                            <td>Martina Welliam</td>
+                                            <td>Partner Sign-off</td>
+                                            <td><span class="badge bg-success">QA Approved</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">View (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Customer Sentiment PyTorch Weights Checkpoint</strong>
+                                                <div class="small text-muted">BIN &bull; 140 MB &bull; Neural Model Artifact</div>
+                                            </td>
+                                            <td>AI Analytics</td>
+                                            <td>Leslie Alexander</td>
+                                            <td>Benchmark Verification</td>
+                                            <td><span class="badge bg-warning text-dark">Under Review</span></td>
+                                            <td><button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Review &amp; Approve (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>SOC2 Type II Remediation Evidence Package</strong>
+                                                <div class="small text-muted">PDF &bull; 28.4 MB &bull; Compliance Dossier</div>
+                                            </td>
+                                            <td>Risk &amp; Governance</td>
+                                            <td>Cody Fisher</td>
+                                            <td>Auditor Verification</td>
+                                            <td><span class="badge bg-success">QA Approved</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">View (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 5: ACTIVE SPRINTS -->
+                <div class="dash-tab-pane d-none" id="tab-ops-sprints">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Active Sprint Burndown &amp; Agile Taskboard</h5>
+                            <small class="text-muted">Sprint 42: Infrastructure Modernization, Zero-Trust Perimeter &amp; Final Staging.</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-chart-pie me-1"></i> Sprint Retrospective (404)
+                            </button>
+                            <button class="btn btn-sm btn-primary" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-plus me-1"></i> Add Sprint Story (404)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sprint KPI Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Committed Points</div>
+                                    <div class="dash-stat-value">54 pts</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-list-check"></i> 14 User Stories</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-list-ol"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Points Completed</div>
+                                    <div class="dash-stat-value">42 pts</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-check"></i> 77.7% Burned</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-fire"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Points In Flight</div>
+                                    <div class="dash-stat-value">12 pts</div>
+                                    <div class="dash-stat-change down"><i class="fa-solid fa-person-running"></i> 3 Tasks Active</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-hourglass-half"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Days Remaining</div>
+                                    <div class="dash-stat-value">4 Days</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-calendar-check"></i> Ends Nov 15</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-calendar-days"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sprint User Stories Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header d-flex justify-content-between align-items-center">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-table-columns me-2"></i> Sprint 42 User Stories &amp; Action Items</h6>
+                            <span class="badge bg-success">Velocity: +12% Ahead of Target</span>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Story ID &amp; Summary</th>
+                                            <th>Workstream</th>
+                                            <th>Assignee</th>
+                                            <th>Story Points</th>
+                                            <th>Status</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong>#OPS-4201: Multi-Region Ingress Controller Failover</strong>
+                                                <div class="small text-muted">Configure AWS Route53 health checks &amp; active-active ALB ingress</div>
+                                            </td>
+                                            <td>Cloud Migration</td>
+                                            <td>Brooklyn Simmons</td>
+                                            <td><span class="badge bg-secondary">8 pts</span></td>
+                                            <td><span class="badge bg-success">Completed</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Detail (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>#OPS-4202: Data Pipeline Sharding Benchmark</strong>
+                                                <div class="small text-muted">Test 10M records/minute throughput across Snowflake warehouse</div>
+                                            </td>
+                                            <td>ERP Integration</td>
+                                            <td>Leslie Alexander</td>
+                                            <td><span class="badge bg-secondary">13 pts</span></td>
+                                            <td><span class="badge bg-warning text-dark">In QA Review</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Detail (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>#OPS-4203: Zero-Trust IAM Policy Automated Hardening</strong>
+                                                <div class="small text-muted">Least-privilege role separation across Terraform state files</div>
+                                            </td>
+                                            <td>Security Audit</td>
+                                            <td>Cody Fisher</td>
+                                            <td><span class="badge bg-secondary">5 pts</span></td>
+                                            <td><span class="badge bg-primary">In Development</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Detail (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>#OPS-4204: Client Dashboard Notification Webhooks</strong>
+                                                <div class="small text-muted">Dispatch real-time delivery notices to client Slack workspace</div>
+                                            </td>
+                                            <td>Automation</td>
+                                            <td>Esther Howard</td>
+                                            <td><span class="badge bg-secondary">5 pts</span></td>
+                                            <td><span class="badge bg-success">Completed</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Detail (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 6: BUDGET MONITORING -->
+                <div class="dash-tab-pane d-none" id="tab-ops-budget">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Operational Budgets &amp; Consulting Expenditure</h5>
+                            <small class="text-muted">Track labor utilization, subcontractor commitments, cloud compute burn, and project margin.</small>
+                        </div>
+                        <div class="d-flex gap-2">
+                            <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-file-csv me-1"></i> Export Ledger CSV (404)
+                            </button>
+                            <button class="btn btn-sm btn-success text-white" onclick="window.location.href='404.html'">
+                                <i class="fa-solid fa-receipt me-1"></i> New Expenditure Entry (404)
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Budget Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Total Allocated</div>
+                                    <div class="dash-stat-value">$480,000</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-shield"></i> Annual Cap</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-sack-dollar"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Spent To Date</div>
+                                    <div class="dash-stat-value">$312,400</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-chart-pie"></i> 65.1% Burned</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-money-bill-transfer"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Projected Year-End</div>
+                                    <div class="dash-stat-value">$440,000</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-check"></i> $40K Surplus</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-calculator"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Gross Margin</div>
+                                    <div class="dash-stat-value">58.4%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-arrow-trend-up"></i> +3.1% vs budget</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-scale-balanced"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project Expense Breakdown Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-receipt me-2"></i> Workstream Financial Burn Ledger</h6>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Engagement / Workstream</th>
+                                            <th>Allocated Budget</th>
+                                            <th>Current Spend</th>
+                                            <th>Remaining</th>
+                                            <th>Burn %</th>
+                                            <th>Health</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Enterprise Cloud Modernization</strong></td>
+                                            <td>$120,000</td>
+                                            <td>$98,500</td>
+                                            <td>$21,500</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-success" style="width: 82%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">82%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">Under Budget</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Audit (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Global ERP &amp; Supply Chain Sync</strong></td>
+                                            <td>$85,000</td>
+                                            <td>$42,500</td>
+                                            <td>$42,500</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-primary" style="width: 50%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">50%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">Under Budget</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Audit (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>AI Analytics &amp; Churn Modeling</strong></td>
+                                            <td>$64,000</td>
+                                            <td>$60,160</td>
+                                            <td>$3,840</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-warning" style="width: 94%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">94%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-warning text-dark">Near Limit</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Audit (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Operations Infrastructure &amp; Tooling</strong></td>
+                                            <td>$50,000</td>
+                                            <td>$32,400</td>
+                                            <td>$17,600</td>
+                                            <td>
+                                                <div class="d-flex align-items-center gap-2">
+                                                    <div class="progress flex-grow-1" style="height: 6px; width: 60px;">
+                                                        <div class="progress-bar bg-success" style="width: 65%;"></div>
+                                                    </div>
+                                                    <small class="fw-bold">65%</small>
+                                                </div>
+                                            </td>
+                                            <td><span class="badge bg-success">Under Budget</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Audit (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 7: CLIENT INQUIRIES -->
+                <div class="dash-tab-pane d-none" id="tab-ops-comms">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Client Consultation Sessions &amp; Stakeholder Comms</h5>
+                            <small class="text-muted">Master sync schedule, meeting minutes, and executive steering committee briefings.</small>
+                        </div>
+                        <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">
+                            <i class="fa-solid fa-calendar-plus me-1"></i> Schedule Sync Meeting (404)
+                        </button>
+                    </div>
+
+                    <!-- Comms Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Scheduled Syncs</div>
+                                    <div class="dash-stat-value">6</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-calendar-check"></i> This Week</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-video"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Completed Reviews</div>
+                                    <div class="dash-stat-value">28</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-check-double"></i> 100% Attended</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-circle-check"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Client CSAT Rating</div>
+                                    <div class="dash-stat-value">4.9 / 5.0</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-star text-warning"></i> Exceptional</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-award"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Open Action Items</div>
+                                    <div class="dash-stat-value">4</div>
+                                    <div class="dash-stat-change down"><i class="fa-solid fa-list-check"></i> Being tracked</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-clipboard-list"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Client Communications Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-comments me-2"></i> Client Consultations Log</h6>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Client Stakeholder</th>
+                                            <th>Consulting Topic</th>
+                                            <th>Assigned Stackly Lead</th>
+                                            <th>Scheduled Time</th>
+                                            <th>Platform</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <strong>Saravanan S. (Lead Client)</strong>
+                                                <div class="small text-muted">Horizon Global Ventures Inc.</div>
+                                            </td>
+                                            <td>Sprint 42 Production Cutover Readiness Review</td>
+                                            <td>Brooklyn Simmons</td>
+                                            <td>Tomorrow, 10:00 AM</td>
+                                            <td><span class="badge bg-primary">Google Meet</span></td>
+                                            <td><button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Join Room (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Elena Rostova (Executive VP)</strong>
+                                                <div class="small text-muted">Global Logistics Ltd</div>
+                                            </td>
+                                            <td>Multi-Region Infrastructure Architecture Briefing</td>
+                                            <td>Martina Welliam</td>
+                                            <td>Friday, 2:30 PM</td>
+                                            <td><span class="badge bg-primary">Zoom Room</span></td>
+                                            <td><button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">Join Room (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <strong>Marcus Vance (Chief Data Officer)</strong>
+                                                <div class="small text-muted">FinVanguard Group</div>
+                                            </td>
+                                            <td>AI Governance &amp; Model Weights Evaluation</td>
+                                            <td>Leslie Alexander</td>
+                                            <td>Nov 17, 11:00 AM</td>
+                                            <td><span class="badge bg-primary">Google Meet</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Details (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 8: ASSET REPOSITORY -->
+                <div class="dash-tab-pane d-none" id="tab-ops-assets">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Operational Asset Repository &amp; Frameworks</h5>
+                            <small class="text-muted">Standardized consulting methodologies, infrastructure templates, and client presentation kits.</small>
+                        </div>
+                        <button class="btn btn-sm btn-primary" onclick="window.location.href='404.html'">
+                            <i class="fa-solid fa-cloud-arrow-up me-1"></i> Upload Framework Asset (404)
+                        </button>
+                    </div>
+
+                    <!-- 4 Asset Cards -->
+                    <div class="row g-4 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-card h-100 p-4 text-center">
+                                <i class="fa-solid fa-file-powerpoint fa-3x text-danger mb-3"></i>
+                                <h6 class="fw-bold mb-1">Enterprise Strategy Master</h6>
+                                <p class="small text-muted mb-3">PPTX &bull; 24.5 MB &bull; 60 Slides Master C-Suite Presentation Template.</p>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Download (404)</button>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-card h-100 p-4 text-center">
+                                <i class="fa-solid fa-file-zipper fa-3x text-primary mb-3"></i>
+                                <h6 class="fw-bold mb-1">Multi-Cloud Terraform Kit</h6>
+                                <p class="small text-muted mb-3">ZIP &bull; 14.8 MB &bull; Zero-Trust AWS/Azure Infrastructure as Code Modules.</p>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Download (404)</button>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-card h-100 p-4 text-center">
+                                <i class="fa-solid fa-file-shield fa-3x text-success mb-3"></i>
+                                <h6 class="fw-bold mb-1">SOC2 Type II Playbook</h6>
+                                <p class="small text-muted mb-3">PDF &bull; 8.2 MB &bull; Step-by-Step Enterprise Audit Readiness Protocol.</p>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Download (404)</button>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-card h-100 p-4 text-center">
+                                <i class="fa-solid fa-file-excel fa-3x text-warning mb-3"></i>
+                                <h6 class="fw-bold mb-1">DCF Valuation Macro Engine</h6>
+                                <p class="small text-muted mb-3">XLSX &bull; 12.1 MB &bull; 10-Year Automated Sensitivity Analysis Model.</p>
+                                <button class="btn btn-sm btn-outline-dark w-100" onclick="window.location.href='404.html'">Download (404)</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Framework Manifest Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-box-archive me-2"></i> Standardized Internal Methodologies</h6>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Framework Title</th>
+                                            <th>Domain</th>
+                                            <th>Version</th>
+                                            <th>Maintainer</th>
+                                            <th>Last Updated</th>
+                                            <th>Action</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><strong>Stackly 7-Pillar Cloud Migration Framework</strong></td>
+                                            <td>Cloud Modernization</td>
+                                            <td>v3.2</td>
+                                            <td>Brooklyn Simmons</td>
+                                            <td>Oct 20, 2026</td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">View (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Generative AI Enterprise Governance Playbook</strong></td>
+                                            <td>Artificial Intelligence</td>
+                                            <td>v2.0</td>
+                                            <td>Leslie Alexander</td>
+                                            <td>Sep 28, 2026</td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">View (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 9: WORKFLOW SETTINGS -->
+                <div class="dash-tab-pane d-none" id="tab-ops-settings">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Manager Workflow Automation &amp; CI/CD Thresholds</h5>
+                            <small class="text-muted">Configure automated consultant assignment, SLA escalation triggers, and webhook integrations.</small>
+                        </div>
+                        <button class="btn btn-sm btn-dark" onclick="window.location.href='404.html'">
+                            <i class="fa-solid fa-floppy-disk me-1"></i> Save All Policies (404)
+                        </button>
+                    </div>
+
+                    <div class="row g-4">
+                        <div class="col-xl-6">
+                            <div class="dash-card p-4">
+                                <h6 class="fw-bold mb-3"><i class="fa-solid fa-gears me-2"></i> Operational Automation Triggers</h6>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="autoAssign" checked>
+                                    <label class="form-check-label fw-bold small" for="autoAssign">Auto-assign consultants based on capacity threshold (&lt; 85%)</label>
+                                    <div class="text-muted small">Automatically routes newly requested client deliverables to available certified staff.</div>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="autoQA" checked>
+                                    <label class="form-check-label fw-bold small" for="autoQA">Require two partner signatures on financial valuation models</label>
+                                    <div class="text-muted small">Enforces dual-custody verification before client download is enabled.</div>
+                                </div>
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="slackAlerts" checked>
+                                    <label class="form-check-label fw-bold small" for="slackAlerts">Real-time Slack notification on SLA breach risk</label>
+                                    <div class="text-muted small">Alerts #ops-incident room if ticket response time exceeds 45 minutes.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-6">
+                            <div class="dash-card p-4">
+                                <h6 class="fw-bold mb-3"><i class="fa-solid fa-bell me-2"></i> Operational Escalation Matrix</h6>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Primary On-Call Operations Lead</label>
+                                    <select class="form-select form-select-sm">
+                                        <option selected>Brooklyn Simmons (Cloud &amp; Infra)</option>
+                                        <option>Martina Welliam (Strategy Partner)</option>
+                                        <option>Cody Fisher (Compliance Officer)</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label small fw-bold">Default Escalation SLA Window</label>
+                                    <select class="form-select form-select-sm">
+                                        <option selected>30 Minutes (Enterprise Diamond)</option>
+                                        <option>1 Hour (Standard Corporate)</option>
+                                        <option>4 Hours (Standard Advisory)</option>
+                                    </select>
+                                </div>
+                                <button class="btn btn-sm btn-dark w-100" onclick="window.location.href='404.html'">Update Escalation Rules (404)</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TAB 10: PERFORMANCE LOGS -->
+                <div class="dash-tab-pane d-none" id="tab-ops-logs">
+                    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                        <div>
+                            <h5 class="fw-bold mb-1">Operational Event Audit Trail &amp; Delivery Logs</h5>
+                            <small class="text-muted">Immutable log of all operational commits, sprint gate closures, and QA approvals.</small>
+                        </div>
+                        <button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">
+                            <i class="fa-solid fa-file-export me-1"></i> Export Audit Package (404)
+                        </button>
+                    </div>
+
+                    <!-- Logs Stats -->
+                    <div class="row g-3 mb-4">
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Events Logged</div>
+                                    <div class="dash-stat-value">1,420</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-check"></i> Last 30 Days</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-blue"><i class="fa-solid fa-terminal"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Delivery Health</div>
+                                    <div class="dash-stat-value">99.4%</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-circle-check"></i> On-Time Commits</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-green"><i class="fa-solid fa-shield-check"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Security Alerts</div>
+                                    <div class="dash-stat-value">0</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-shield"></i> Clean Posture</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-purple"><i class="fa-solid fa-lock"></i></div>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-sm-6">
+                            <div class="dash-stat-card">
+                                <div>
+                                    <div class="dash-stat-label">Automated Jobs</div>
+                                    <div class="dash-stat-value">48 / 48</div>
+                                    <div class="dash-stat-change up"><i class="fa-solid fa-bolt"></i> 100% Success</div>
+                                </div>
+                                <div class="dash-stat-icon stat-icon-gold"><i class="fa-solid fa-robot"></i></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Table -->
+                    <div class="dash-card">
+                        <div class="dash-card-header d-flex justify-content-between align-items-center">
+                            <h6 class="dash-card-title"><i class="fa-solid fa-list-ol me-2"></i> Real-time Operations Audit Trail</h6>
+                            <span class="badge bg-success">Stream Live</span>
+                        </div>
+                        <div class="dash-card-body p-0">
+                            <div class="table-responsive">
+                                <table class="dash-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Timestamp</th>
+                                            <th>User / System Actor</th>
+                                            <th>Action Event</th>
+                                            <th>Target Workstream</th>
+                                            <th>Status</th>
+                                            <th>Details</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Today, 11:42 AM</td>
+                                            <td><strong>Brooklyn Simmons</strong></td>
+                                            <td>Approved QA Gate &mdash; Terraform Blueprint v2.1</td>
+                                            <td>Cloud Migration</td>
+                                            <td><span class="badge bg-success">Success</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Today, 10:15 AM</td>
+                                            <td><strong>Automated CI/CD</strong></td>
+                                            <td>Executed Unit &amp; Security Test Suite (480 checks)</td>
+                                            <td>ERP Integration</td>
+                                            <td><span class="badge bg-success">Pass</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Yesterday, 4:30 PM</td>
+                                            <td><strong>Martina Welliam</strong></td>
+                                            <td>Uploaded Q4 Strategic Executive Deck</td>
+                                            <td>Corporate Advisory</td>
+                                            <td><span class="badge bg-success">Success</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect (404)</button></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Yesterday, 2:10 PM</td>
+                                            <td><strong>Cody Fisher</strong></td>
+                                            <td>Verified SOC2 Type II Audit Checksum (SHA-256)</td>
+                                            <td>Risk Governance</td>
+                                            <td><span class="badge bg-success">Verified</span></td>
+                                            <td><button class="btn btn-sm btn-outline-dark" onclick="window.location.href='404.html'">Inspect (404)</button></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/jquery-3.7.1.min.js"></script>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/auth.js"></script>
+    <script>
+        if (BizlyAuth.isLoggedIn()) {
+            const user = BizlyAuth.getUser();
+            document.querySelectorAll('.auth-user-name').forEach(el => el.textContent = user.name || user.email);
+            document.querySelectorAll('.auth-user-role').forEach(el => el.textContent = user.role.toUpperCase());
+        }
+
+        const openBtn = document.getElementById('openSidebarBtn');
+        const closeBtn = document.getElementById('closeSidebarBtn');
+        const sidebar = document.getElementById('dashSidebar');
+        const overlay = document.getElementById('sidebarOverlay');
+
+        function toggleSidebar(open) {
+            if (open) {
+                sidebar.classList.add('open');
+                overlay.classList.add('active');
+            } else {
+                sidebar.classList.remove('open');
+                overlay.classList.remove('active');
+            }
+        }
+
+        if (openBtn) openBtn.addEventListener('click', () => toggleSidebar(true));
+        if (closeBtn) closeBtn.addEventListener('click', () => toggleSidebar(false));
+        if (overlay) overlay.addEventListener('click', () => toggleSidebar(false));
+
+        // TAB SWITCHING INSIDE THIS SINGLE FILE
+        document.querySelectorAll('.dash-nav-link[data-tab]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const tabId = this.getAttribute('data-tab');
+
+                document.querySelectorAll('.dash-nav-link').forEach(l => l.classList.remove('active'));
+                this.classList.add('active');
+
+                document.querySelectorAll('.dash-tab-pane').forEach(pane => pane.classList.add('d-none'));
+                const target = document.getElementById(tabId);
+                if (target) {
+                    target.classList.remove('d-none');
+                }
+
+                const spanText = this.querySelector('span') ? this.querySelector('span').textContent.replace(/^\d+\.\s*/, '') : '';
+                const titleEl = document.getElementById('dashCurrentTabTitle');
+                if (titleEl && spanText) {
+                    titleEl.textContent = spanText;
+                }
+
+                if (window.innerWidth < 992) {
+                    toggleSidebar(false);
+                }
+
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Logo click switches to first dashboard tab (does not navigate to index.html)
+        const brandLogo = document.getElementById('brandLogoLink');
+        if (brandLogo) {
+            brandLogo.addEventListener('click', function(e) {
+                e.preventDefault();
+                const firstTab = document.querySelector('.dash-nav-link[data-tab]');
+                if (firstTab) {
+                    firstTab.click();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
