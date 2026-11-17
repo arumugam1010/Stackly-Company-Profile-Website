@@ -257,35 +257,22 @@
                                             <li class="">
                                                 <a href="contact.html">Contact</a>
                                             </li>
-                                            <li class="auth-guest">
-                                                <a href="login.html"><i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Login</a>
-                                            </li>
-                                            <li class="auth-guest">
-                                                <a href="register.html"><i class="fa-solid fa-user-plus me-1"></i> Register</a>
-                                            </li>
-                                            <li class="auth-user d-none">
-                                                <a href="#" class="btn-goto-dashboard" style="color: #C5A880; font-weight: 600;"><i class="fa-solid fa-gauge me-1"></i> Dashboard</a>
-                                            </li>
-                                            <li class="auth-user d-none">
-                                                <a href="#" class="btn-logout text-danger" title="Logout"><i class="fa-solid fa-right-from-bracket me-1"></i> Logout</a>
-                                            </li>
                                         </ul>
                                     </nav>
                                 </div>
                             </div>
                             <div class="header-right d-flex justify-content-end align-items-center">
-                                <div class="icon-items">
-                                    <div class="icon">
-                                        <i class="fa-solid fa-paper-plane"></i>
+                                <div class="header-auth-buttons d-flex align-items-center">
+                                    <div class="auth-guest d-flex align-items-center">
+                                        <a href="login.html" class="nav-btn-login"><i class="fa-solid fa-arrow-right-to-bracket me-1"></i> Login</a>
+                                        <a href="register.html" class="nav-btn-register"><i class="fa-solid fa-user-plus me-1"></i> Register</a>
                                     </div>
-                                    <div class="content">
-                                        <p>
-                                            Support Number  : <a href="404.html">(302) 555-0107</a>
-                                        </p>
+                                    <div class="auth-user d-none align-items-center">
+                                        <a href="#" class="nav-btn-dashboard btn-goto-dashboard"><i class="fa-solid fa-gauge me-1"></i> Dashboard</a>
+                                        <a href="#" class="nav-btn-logout btn-logout" title="Logout"><i class="fa-solid fa-right-from-bracket me-1"></i> Logout</a>
                                     </div>
                                 </div>
                                 <div class="header-right-bar">
-                                    
                                     <div class="header__hamburger d-xl-none my-auto">
                                         <div class="sidebar__toggle">
                                             <i class="fa-regular fa-bars-staggered"></i>
@@ -639,101 +626,117 @@
         </div>
 
         <!-- Footer Section Start -->
-        <footer class="footer-section header-bg">
+        <footer class="footer-section footer-model-custom">
             <div class="container">
                 <div class="footer-widget-wrapper">
-                    <div class="row">
-                        <div class="col-xl-4 col-sm-6 col-md-6 col-lg-4 wow fadeInUp" data-wow-delay=".3s">
-                            <div class="single-footer-widget">
-                                <div class="widget-head">
-                                    <a href="index.html">
-                                        <img src="images/stackly-logo.webp" alt="Stackly Logo">
-                                    </a>
-                                </div>
-                                <div class="footer-content">
-                                    <p>
-                                        We understand that business can be chaotic. That’s where <br> we come in. 
-                                    </p>
-                                </div>
+                    <div class="row g-4">
+                        <!-- Col 1: Brand Info -->
+                        <div class="col-xl-4 col-lg-4 col-md-6 wow fadeInUp" data-wow-delay=".2s">
+                            <div class="footer-brand-box">
+                                <a href="index.html" class="footer-logo">
+                                    <img src="images/stackly-logo.webp" alt="Stackly Logo">
+                                </a>
+                                <p class="footer-desc">
+                                    Welcome to Restin Tours & Travels, your premier partner for exploring worldwide destinations, scenic adventures, and bespoke travel packages crafted for lifelong memories.
+                                </p>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-sm-6 col-md-6 col-lg-4 ps-lg-5 wow fadeInUp" data-wow-delay=".5s">
-                            <div class="single-footer-widget">
-                                <div class="widget-head">
-                                    <h4>Quick Links</h4>
+
+                        <!-- Col 2: Services / Links -->
+                        <div class="col-xl-2 col-lg-2 col-md-6 col-sm-6 wow fadeInUp" data-wow-delay=".4s">
+                            <div class="footer-widget-box ps-xl-3">
+                                <h4 class="footer-widget-title">Our Travel Services</h4>
+                                <div class="footer-title-divider">
+                                    <span class="line"></span>
+                                    <span class="dot"></span>
                                 </div>
-                                <ul class="list-items">
+                                <ul class="footer-nav-list">
+                                    <li><a href="index.html">Home</a></li>
+                                    <li><a href="about.html">About Us</a></li>
+                                    <li><a href="service.html">Tour Guides</a></li>
+                                    <li><a href="portfolio.html">Tour Packages</a></li>
+                                    <li><a href="blog.html">Travel Blog</a></li>
+                                    <li><a href="contact.html">Contact Us</a></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Col 3: Support & Booking Hours -->
+                        <div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 wow fadeInUp" data-wow-delay=".6s">
+                            <div class="footer-widget-box ps-xl-3">
+                                <h4 class="footer-widget-title">Support & Booking Hours</h4>
+                                <div class="footer-title-divider line-only">
+                                    <span class="line"></span>
+                                </div>
+                                <ul class="footer-hours-list">
                                     <li>
-                                        <a href="index.html">Home</a>
+                                        <span class="day">Mon to Fri :</span>
+                                        <span class="time">08:00 - 20:00</span>
                                     </li>
                                     <li>
-                                        <a href="about.html">About</a>
+                                        <span class="day">Saturday :</span>
+                                        <span class="time">09:00 - 18:00</span>
                                     </li>
                                     <li>
-                                        <a href="portfolio.html">Portfolio</a>
-                                    </li>
-                                    <li>
-                                        <a href="service.html">Services</a>
-                                    </li>
-                                    <li>
-                                        <a href="blog.html">Blog</a>
-                                    </li>
-                                    <li>
-                                        <a href="contact.html">Contact</a>
+                                        <span class="day">Sunday :</span>
+                                        <span class="time">10:00 - 16:00</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-xl-4 col-sm-6 col-md-6 col-lg-4 ps-lg-4 wow fadeInUp" data-wow-delay=".7s">
-                            <div class="single-footer-widget">
-                                <div class="widget-head">
-                                    <h4>Company Information</h4>
+
+                        <!-- Col 4: Contact Us -->
+                        <div class="col-xl-3 col-lg-3 col-md-6 wow fadeInUp" data-wow-delay=".8s">
+                            <div class="footer-widget-box ps-xl-3">
+                                <h4 class="footer-widget-title">Contact Us</h4>
+                                <div class="footer-title-divider line-only">
+                                    <span class="line"></span>
                                 </div>
-                                <div class="company-info" style="margin-top: 25px;">
-                                    <div class="content">
-                                        <span>Office address:</span>
-                                        <h6>
-                                            3517 W. Gray St. Utica, Pennsylvania 57867
-                                        </h6>
-                                    </div>
-                                    <div class="content">
-                                        <span>Send mail:</span>
-                                        <h6>
-                                            <a href="mailto:tanya.hill@example.com">tanya.hill@example.com</a>
-                                        </h6>
-                                    </div>
-                                    <div class="content">
-                                        <span>Call us:</span>
-                                        <h6>
-                                            <a href="tel:1234567890">123 456 7890</a>
-                                        </h6>
-                                    </div>
-                                </div>
+                                <ul class="footer-contact-list">
+                                    <li>
+                                        <div class="icon"><a href="404.html" title="Location"><i class="fa-solid fa-location-dot"></i></a></div>
+                                        <div class="text"><a href="404.html">Restin Tours & Travels, 102/B Tourism Avenue, London, UK</a></div>
+                                    </li>
+                                    <li>
+                                        <div class="icon"><a href="404.html" title="Email"><i class="fa-solid fa-envelope"></i></a></div>
+                                        <div class="text"><a href="404.html">bookings@restintours.com</a></div>
+                                    </li>
+                                    <li>
+                                        <div class="icon"><a href="404.html" title="Phone"><i class="fa-solid fa-phone"></i></a></div>
+                                        <div class="text"><a href="404.html">+123 456 7879 967</a></div>
+                                    </li>
+                                </ul>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="footer-bottom">
-                    <ul class="social-icon wow fadeInUp" data-wow-delay=".3s">
-                        <li>
-                            <a href="#">
-                                Facebook
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                Twitter
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#">
-                                LinkedIn
-                            </a>
-                        </li>
-                    </ul>
-                    <p class="wow fadeInUp" data-wow-delay=".5s">
-                        <a href="index.html">Copyright © 2025  by <span>Stackly.</span> All Rights Reserved. </a>
-                    </p>
+
+                <!-- Footer Bottom -->
+                <div class="footer-bottom-bar">
+                    <div class="row align-items-center">
+                        <div class="col-lg-3 col-md-12 text-center text-lg-start mb-3 mb-lg-0">
+                            <div class="footer-social-icons">
+                                <a href="404.html" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                                <a href="404.html" aria-label="X (Twitter)"><i class="fa-brands fa-x-twitter"></i></a>
+                                <a href="404.html" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                                <a href="404.html" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12 text-center mb-3 mb-lg-0">
+                            <div class="footer-legal-links">
+                                <a href="contact.html">Terms & Conditions</a>
+                                <span class="sep">/</span>
+                                <a href="contact.html">Privacy Policy</a>
+                                <span class="sep">/</span>
+                                <a href="contact.html">Contact Us</a>
+                            </div>
+                        </div>
+                        <div class="col-lg-3 col-md-12 text-center text-lg-end">
+                            <p class="footer-copyright-text">
+                                Copyright© <span class="brand-name">RESTIN TOURS & TRAVELS</span>
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
         </footer>

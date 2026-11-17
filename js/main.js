@@ -30,6 +30,19 @@ CSS TABLE OF CONTENTS
 
     $(document).ready( function() {
 
+        //>> Active Nav Link Auto-Highlight <<//
+        try {
+            var currentFile = window.location.pathname.split("/").pop() || "index.html";
+            if (!currentFile || currentFile === "" || currentFile === "/") currentFile = "index.html";
+            $(".header-main .main-menu ul li").each(function() {
+                var linkHref = $(this).children("a").attr("href");
+                if (linkHref && linkHref.split("/").pop() === currentFile) {
+                    $(".header-main .main-menu ul li").removeClass("active");
+                    $(this).addClass("active");
+                }
+            });
+        } catch (e) {}
+
         //>> Mobile Menu Js Start <<//
         $('#mobile-menu').meanmenu({
             meanMenuContainer: '.mobile-menu',
@@ -38,13 +51,35 @@ CSS TABLE OF CONTENTS
         });
 
         //>> Sidebar Toggle Js Start <<//
-        $(".offcanvas__close,.offcanvas__overlay").on("click", function() {
+        function closeOffcanvas() {
             $(".offcanvas__info").removeClass("info-open");
             $(".offcanvas__overlay").removeClass("overlay-open");
-        });
-        $(".sidebar__toggle").on("click", function() {
+            $("body, html").removeClass("no-scroll");
+        }
+
+        function openOffcanvas() {
             $(".offcanvas__info").addClass("info-open");
             $(".offcanvas__overlay").addClass("overlay-open");
+            $("body, html").addClass("no-scroll");
+        }
+
+        $(".offcanvas__close,.offcanvas__overlay").on("click", function() {
+            closeOffcanvas();
+        });
+        $(".sidebar__toggle").on("click", function() {
+            openOffcanvas();
+        });
+
+        // Close offcanvas on Escape key
+        $(document).on("keydown", function(e) {
+            if ((e.key === "Escape" || e.keyCode === 27) && $(".offcanvas__info").hasClass("info-open")) {
+                closeOffcanvas();
+            }
+        });
+
+        // Prevent wheel / touch drag scrolling over background overlay
+        $(".offcanvas__overlay").on("wheel touchmove", function(e) {
+            e.preventDefault();
         });
 
         //>> Body Overlay Js Start <<//
